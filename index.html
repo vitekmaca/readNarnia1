@@ -1,0 +1,1144 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Interaktivní průvodce knihou Lev, čarodějnice a skříň pro předčítání dětem — namluvené kapitoly, postavy, kvízy a svět Narnie.">
+<title>Lev, čarodějnice a skříň — průvodce pro předčítání</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  /* ===== Tokens: light "pergamen" and dark "svíčky v hradu" ===== */
+  :root{
+    --paper:#f3ead2; --paper-2:#faf3e0; --panel:#f7f0dc; --panel-2:#eee3c7;
+    --ink:#241a12; --ink-2:#5a4630; --ink-3:#8a7355;
+    --line:rgba(36,26,18,.16); --line-2:rgba(36,26,18,.30);
+    --gold:#a9791c; --gold-2:#d1a53e; --ember:#7a1f1f; --ember-2:#9c2b2b;
+    --elven:#1f5c3e; --shadow:rgba(36,26,18,.20);
+    --radius:16px;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Cambria,Georgia,serif;
+    --display:"Cinzel","Trajan Pro","Palatino Linotype","Book Antiqua",Cambria,Georgia,serif;
+    --ui:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#161009; --paper-2:#1d1610; --panel:#221a12; --panel-2:#2a2116;
+      --ink:#ecdfc4; --ink-2:#c2ac86; --ink-3:#8f7a5c;
+      --line:rgba(236,223,196,.14); --line-2:rgba(236,223,196,.26);
+      --gold:#e0b95c; --gold-2:#f0d488; --ember:#c24b4b; --ember-2:#d66a5a;
+      --elven:#4fae82; --shadow:rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#f3ead2; --paper-2:#faf3e0; --panel:#f7f0dc; --panel-2:#eee3c7;
+    --ink:#241a12; --ink-2:#5a4630; --ink-3:#8a7355;
+    --line:rgba(36,26,18,.16); --line-2:rgba(36,26,18,.30);
+    --gold:#a9791c; --gold-2:#d1a53e; --ember:#7a1f1f; --ember-2:#9c2b2b;
+    --elven:#1f5c3e; --shadow:rgba(36,26,18,.20);
+  }
+  :root[data-theme="dark"]{
+    --paper:#161009; --paper-2:#1d1610; --panel:#221a12; --panel-2:#2a2116;
+    --ink:#ecdfc4; --ink-2:#c2ac86; --ink-3:#8f7a5c;
+    --line:rgba(236,223,196,.14); --line-2:rgba(236,223,196,.26);
+    --gold:#e0b95c; --gold-2:#f0d488; --ember:#c24b4b; --ember-2:#d66a5a;
+    --elven:#4fae82; --shadow:rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0}
+  .app{
+    font-family:var(--serif); color:var(--ink); background:var(--paper);
+    background-image:
+      radial-gradient(120% 80% at 50% -10%, rgba(209,165,62,.10), transparent 60%),
+      radial-gradient(60% 50% at 100% 100%, rgba(122,31,31,.06), transparent 60%);
+    min-height:100vh; line-height:1.55; -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:1080px; margin:0 auto; padding:18px clamp(12px,3vw,26px) 60px}
+
+  /* ===== Header ===== */
+  header.top{
+    position:sticky; top:0; z-index:40; backdrop-filter:blur(6px);
+    background:color-mix(in srgb, var(--paper) 86%, transparent);
+    border-bottom:1px solid var(--line);
+  }
+  .top-in{max-width:1080px; margin:0 auto; padding:10px clamp(12px,3vw,26px);
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+  .brand{display:flex; align-items:center; gap:12px; margin-right:auto; min-width:0}
+  .crest{width:42px; height:42px; flex:none; color:var(--gold)}
+  .series-title{font-family:var(--display); font-weight:400; letter-spacing:.14em; text-transform:uppercase;
+    font-size:.72rem; margin:0 0 2px; color:var(--gold-2)}
+  .brand h1{font-family:var(--display); font-weight:700; letter-spacing:.06em;
+    font-size:clamp(1.05rem,2.4vw,1.5rem); margin:0; text-transform:uppercase; text-wrap:balance}
+  .brand p{margin:0; font-size:.78rem; color:var(--ink-2); font-family:var(--ui); letter-spacing:.02em}
+
+  /* mode toggle */
+  .modeswitch{display:inline-flex; background:var(--panel-2); border:1px solid var(--line-2);
+    border-radius:999px; padding:3px; font-family:var(--ui); font-size:.8rem; box-shadow:inset 0 1px 2px var(--shadow)}
+  .modeswitch button{border:0; background:transparent; color:var(--ink-2); cursor:pointer;
+    padding:7px 14px; border-radius:999px; font-weight:600; letter-spacing:.02em; display:flex; align-items:center; gap:7px}
+  .modeswitch button.on{color:#fff; background:linear-gradient(180deg,var(--ember-2),var(--ember))}
+  .modeswitch button.on.kids{background:linear-gradient(180deg,var(--gold-2),var(--gold))}
+  .modeswitch svg{width:16px;height:16px}
+  .iconbtn{width:38px; height:38px; flex:none; border-radius:999px; border:1px solid var(--line-2);
+    background:var(--panel-2); color:var(--ink-2); cursor:pointer; display:flex; align-items:center; justify-content:center;
+    box-shadow:inset 0 1px 2px var(--shadow)}
+  .iconbtn:hover{border-color:var(--gold); color:var(--ink)}
+  .iconbtn svg{width:18px; height:18px}
+
+  /* progress "školní rok" */
+  .road{max-width:1080px; margin:0 auto; padding:0 clamp(12px,3vw,26px) 10px}
+  .road-in{display:flex; align-items:center; gap:12px; font-family:var(--ui); font-size:.78rem; color:var(--ink-2)}
+  .road-track{flex:1; height:9px; border-radius:99px; background:var(--panel-2);
+    border:1px solid var(--line); overflow:hidden; position:relative}
+  .road-fill{height:100%; width:0%; border-radius:99px;
+    background:repeating-linear-gradient(90deg,var(--ember),var(--ember) 7px,var(--ember-2) 7px,var(--ember-2) 14px);
+    transition:width .5s ease}
+  .road b{color:var(--ink); font-variant-numeric:tabular-nums}
+
+  /* ===== Tabs ===== */
+  nav.tabs{display:flex; gap:6px; margin:16px 0 18px; flex-wrap:wrap; font-family:var(--ui)}
+  nav.tabs button{border:1px solid var(--line-2); background:var(--panel); color:var(--ink-2);
+    padding:9px 16px; border-radius:11px; cursor:pointer; font-weight:600; font-size:.9rem;
+    display:flex; align-items:center; gap:8px; transition:.15s}
+  nav.tabs button svg{width:17px;height:17px}
+  nav.tabs button:hover{border-color:var(--gold); color:var(--ink)}
+  nav.tabs button.on{background:linear-gradient(180deg,#3a2418,#241a12); color:#f2eee6; border-color:var(--ink)}
+
+  .view{display:none; animation:fade .3s ease}
+  .view.on{display:block}
+  @keyframes fade{from{opacity:0; transform:translateY(6px)}to{opacity:1; transform:none}}
+
+  /* ===== Audio ===== */
+  .audio-hint{font-family:var(--ui); font-size:.82rem; color:var(--ink-2); margin:0 2px 16px;
+    display:flex; align-items:center; gap:8px}
+  .audio-hint svg{width:16px;height:16px;color:var(--gold);flex:none}
+  .audio-hint b{color:var(--ink)}
+  .ch-body audio{width:100%; margin-top:6px; display:block}
+  .ch-body audio::-webkit-media-controls-panel{background:var(--panel-2)}
+
+  /* ===== Chapters ===== */
+  .ch{border:1px solid var(--line-2); border-radius:var(--radius); background:var(--panel); margin-bottom:12px;
+    overflow:hidden; box-shadow:0 4px 16px -14px var(--shadow)}
+  .ch-head{display:flex; align-items:center; gap:14px; padding:14px 16px; cursor:pointer}
+  .ch-num{font-family:"Cinzel Decorative",var(--display); font-weight:700; font-size:1.05rem; color:var(--paper);
+    background:linear-gradient(180deg,#3a2418,#241a12); min-width:44px; height:44px; border-radius:10px;
+    display:flex; align-items:center; justify-content:center; flex:none; letter-spacing:.02em}
+  :root[data-theme="dark"] .ch-num{background:linear-gradient(180deg,#4a3220,#332214); color:var(--gold-2)}
+  :root[data-theme="dark"] .ch-num.has-audio{background:linear-gradient(180deg,var(--gold-2),var(--gold)); color:#241a12}
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]) .ch-num{background:linear-gradient(180deg,#4a3220,#332214); color:var(--gold-2)}
+    :root:not([data-theme="light"]) .ch-num.has-audio{background:linear-gradient(180deg,var(--gold-2),var(--gold)); color:#241a12}
+  }
+  .ch-t{flex:1; min-width:0}
+  .ch-t h3{margin:0; font-size:1.06rem; font-family:var(--serif); font-weight:700; text-wrap:balance}
+  .audio-badge{display:inline-flex; vertical-align:middle; color:var(--gold); background:none; border:none; padding:2px; margin:0 0 0 2px; cursor:pointer; border-radius:6px}
+  .audio-badge:hover{color:var(--ink); background:var(--panel-2)}
+  .audio-dur{font-family:var(--ui); font-size:.72rem; font-weight:600; color:var(--ink-3); vertical-align:middle}
+  .audio-badge svg{width:15px; height:15px}
+  .ch-num.has-audio{background:linear-gradient(180deg,var(--gold-2),var(--gold)); color:#241a12}
+  .ch-t .en{font-family:var(--ui); font-size:.74rem; color:var(--ink-3); letter-spacing:.02em}
+  .fear{display:flex; align-items:center; gap:3px; margin-top:4px}
+  .fear .lab{font-family:var(--ui); font-size:.68rem; color:var(--ink-3); margin-right:4px; letter-spacing:.02em}
+  .flame{width:13px; height:13px; color:var(--ember)}
+  .flame.off{color:var(--line-2)}
+  .ch-read{flex:none; font-family:var(--ui); font-size:.76rem; font-weight:700; cursor:pointer;
+    border:1px solid var(--line-2); background:var(--panel-2); color:var(--ink-2); border-radius:9px; padding:8px 11px;
+    display:flex; align-items:center; gap:6px; white-space:nowrap}
+  .ch-read.done{background:linear-gradient(180deg,var(--elven),color-mix(in srgb,var(--elven) 70%, #000));
+    color:#fff; border-color:transparent}
+  .ch-read svg{width:15px;height:15px}
+  .ch-body{display:none; padding:2px 16px 18px; border-top:1px solid var(--line)}
+  .ch.open .ch-body{display:block; animation:fade .25s ease}
+  .ch.locked .ch-head{opacity:.62}
+  .caret{width:18px;height:18px;color:var(--ink-3); transition:transform .2s; flex:none}
+  .ch.open .caret{transform:rotate(90deg)}
+
+  .block{margin-top:14px}
+  .block h4{font-family:var(--ui); text-transform:uppercase; letter-spacing:.08em; font-size:.72rem;
+    color:var(--gold); margin:0 0 6px; display:flex; align-items:center; gap:7px}
+  .app h4 svg{width:15px; height:15px; flex:none}
+  .place-ic svg{width:100%; height:100%}
+  .caret svg{width:100%; height:100%}
+  .block p{margin:0}
+  .bullets{margin:0; padding-left:2px; list-style:none}
+  .bullets li{position:relative; padding-left:22px; margin:5px 0}
+  .bullets li::before{content:""; position:absolute; left:4px; top:.55em; width:7px; height:7px; border-radius:2px;
+    background:var(--gold); transform:rotate(45deg)}
+  .q-list li::before{background:var(--elven)}
+  .words{display:flex; flex-wrap:wrap; gap:8px}
+  .word{font-family:var(--ui); font-size:.82rem; background:var(--panel-2); border:1px solid var(--line);
+    border-radius:9px; padding:6px 10px}
+  .word b{color:var(--ink)}
+  .word span{color:var(--ink-2)}
+  .fearnote{background:color-mix(in srgb,var(--ember) 12%, var(--panel)); border:1px solid color-mix(in srgb,var(--ember) 30%, transparent);
+    border-radius:10px; padding:10px 12px; font-size:.92rem}
+
+  .kidbox{background:linear-gradient(180deg,color-mix(in srgb,var(--gold) 10%,var(--panel)),var(--panel));
+    border:1px dashed var(--gold-2); border-radius:12px; padding:14px 16px; margin-top:10px}
+  .kidbox .teaser{font-size:1.05rem}
+  .kidbox .block:first-child{margin-top:2px}
+  .kidrecap{font-size:1.02rem; line-height:1.62; margin:0 0 .7em}
+  .kidrecap:last-child{margin-bottom:0}
+  .locknote{font-family:var(--ui); font-size:.86rem; color:var(--ink-2); display:flex; align-items:center; gap:8px; padding:6px 0}
+  .locknote svg{width:16px;height:16px;color:var(--gold)}
+
+  /* quiz */
+  .quiz{margin-top:12px}
+  .quiz .qq{margin:12px 0}
+  .quiz .qtext{font-weight:700; margin-bottom:7px}
+  .opts{display:flex; flex-wrap:wrap; gap:8px}
+  .opt{font-family:var(--ui); font-size:.9rem; cursor:pointer; border:1px solid var(--line-2);
+    background:var(--panel-2); color:var(--ink); border-radius:10px; padding:9px 13px; transition:.12s}
+  .opt:hover{border-color:var(--gold)}
+  .opt.correct{background:linear-gradient(180deg,var(--elven),color-mix(in srgb,var(--elven) 70%,#000)); color:#fff; border-color:transparent}
+  .opt.wrong{background:color-mix(in srgb,var(--ember) 22%,var(--panel)); border-color:var(--ember); text-decoration:line-through}
+  .opt:disabled{cursor:default}
+
+  /* ===== Characters ===== */
+  .charhint{font-family:var(--ui); font-size:.85rem; color:var(--ink-2); margin:0 2px 16px}
+  .char-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(146px,1fr)); gap:16px}
+  .char{border:1px solid var(--line-2); border-radius:16px; background:var(--panel); padding:9px 9px 10px;
+    text-align:center; cursor:pointer; transition:transform .18s,box-shadow .18s,border-color .18s;
+    box-shadow:0 18px 28px -24px var(--shadow)}
+  .char:hover{border-color:var(--gold); transform:translateY(-4px); box-shadow:0 26px 36px -22px var(--shadow)}
+  .char:focus-visible{outline:2px solid var(--gold); outline-offset:2px}
+  .pframe{aspect-ratio:3/4; border-radius:12px; overflow:hidden; background:var(--panel-2); position:relative;
+    box-shadow:inset 0 0 0 1px var(--line)}
+  .pframe img{width:100%; height:100%; object-fit:cover; object-position:top center; display:block}
+  .pframe.fallback{display:flex; align-items:center; justify-content:center; color:var(--ink-3)}
+  .pframe.fallback svg.portrait{width:100%; height:100%}
+  .pframe.fallback>svg:not(.portrait){width:38px; height:38px}
+  .char h4{margin:11px 4px 0; font-family:var(--serif); font-size:1.02rem; font-weight:600; line-height:1.16; text-wrap:balance}
+  .char .race{font-family:var(--ui); font-size:.67rem; text-transform:uppercase; letter-spacing:.08em; color:var(--gold); margin-top:3px; font-weight:600}
+  .char.locked{cursor:default; box-shadow:0 10px 20px -20px var(--shadow)}
+  .char.locked h4{color:var(--ink-3)}
+  .char.locked .race{visibility:hidden}
+
+  .medallion{width:66px; height:66px; margin:0 auto 9px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(circle at 35% 30%, var(--panel-2), color-mix(in srgb,var(--gold) 22%,var(--panel)));
+    border:2px solid var(--gold-2); color:var(--gold); box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--gold) 12%,transparent)}
+  .medallion svg{width:34px; height:34px}
+  .medallion.pm{overflow:hidden; padding:0}
+  .medallion.pm svg.portrait{width:100%; height:100%; display:block}
+  .medallion.pm img{width:100%; height:100%; object-fit:cover; object-position:top center; display:block}
+  .char-detail{grid-column:1/-1}
+  .cd{border:1px solid var(--gold-2); border-radius:18px; background:var(--panel);
+    padding:18px; display:flex; gap:20px; align-items:flex-start; box-shadow:0 26px 44px -28px var(--shadow)}
+  .cd-pimg{flex:none; width:min(280px,42vw); aspect-ratio:3/4; border-radius:14px; overflow:hidden;
+    border:1px solid var(--gold-2); box-shadow:0 22px 36px -24px var(--shadow)}
+  .cd-pimg img{width:100%; height:100%; object-fit:cover; object-position:top center; display:block}
+  .cd .medallion{width:110px; height:110px; margin:0; flex:none}
+  .cd .cdbody{flex:1; min-width:0}
+  .cd h3{margin:0 0 2px; font-family:var(--display); font-size:1.35rem; letter-spacing:.01em}
+  .cd .en{font-family:var(--ui); font-size:.78rem; color:var(--ink-3)}
+  .cd .say{font-family:var(--ui); font-size:.82rem; color:var(--elven); margin:5px 0 9px}
+  .cd .say b{color:var(--ink-2); font-weight:600}
+  .cd .close{cursor:pointer; border:1px solid var(--line-2); background:var(--panel-2);
+    color:var(--ink-2); border-radius:9px; width:32px; height:32px; font-size:1rem; flex:none; align-self:flex-start}
+
+  /* race accents */
+  .r-kouzelnik .medallion{border-color:var(--gold-2); color:var(--gold)}
+  .r-mudla .medallion{border-color:#9c7b4e; color:#9c7b4e}
+  .r-obr .medallion{border-color:#8a6b3c; color:#8a6b3c}
+  .r-kentaur .medallion{border-color:#5f86ad; color:#5f86ad}
+  .r-duch .medallion{border-color:#7fa8c9; color:#7fa8c9}
+  .r-zvire .medallion{border-color:var(--elven); color:var(--elven)}
+  .r-zlo .medallion{border-color:var(--ember-2); color:var(--ember)}
+  .r-skret .medallion{border-color:#7a6a4a; color:#7a6a4a}
+  .r-skritek .medallion{border-color:#6a8a5a; color:#6a8a5a}
+  .r-clovek .medallion{border-color:var(--gold-2); color:var(--gold)}
+  .r-faun .medallion{border-color:#8a6b3c; color:#8a6b3c}
+  .r-lev .medallion{border-color:var(--gold-2); color:var(--gold-2); box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 28%,transparent)}
+  .r-trpaslik .medallion{border-color:#7a6a4a; color:#7a6a4a}
+
+  /* ===== Sub-segment ===== */
+  .subseg{display:inline-flex; background:var(--panel-2); border:1px solid var(--line-2); border-radius:999px;
+    padding:3px; margin-bottom:16px; font-family:var(--ui); font-size:.84rem}
+  .subseg button{border:0; background:transparent; color:var(--ink-2); cursor:pointer; padding:7px 16px; border-radius:999px; font-weight:600}
+  .subseg button.on{background:linear-gradient(180deg,#3a2418,#241a12); color:#f2eee6}
+
+  /* ===== World (lore) ===== */
+  .lore-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:14px}
+  .lore{border:1px solid var(--line-2); border-radius:var(--radius); background:var(--panel); padding:16px 18px;
+    box-shadow:0 4px 16px -14px var(--shadow)}
+  .lore.wide{grid-column:1/-1}
+  .lore-head{display:flex; align-items:center; gap:12px; margin-bottom:8px}
+  .lore-ic{width:44px;height:44px;border-radius:12px; display:flex;align-items:center;justify-content:center; flex:none;
+    background:radial-gradient(circle at 35% 30%, var(--panel-2), color-mix(in srgb,var(--gold) 20%,var(--panel)));
+    border:1px solid var(--gold-2); color:var(--gold)}
+  .lore-ic svg{width:26px;height:26px}
+  .lore h3{margin:0; font-family:var(--display); font-size:1.1rem; letter-spacing:.01em}
+  .lore p{margin:0; font-size:.95rem}
+  .race-list{display:flex; flex-direction:column; gap:10px; margin-top:4px}
+  .race-row{display:flex; align-items:center; gap:12px}
+  .race-row .medallion{width:46px;height:46px;margin:0;flex:none}
+  .race-row .medallion svg{width:24px;height:24px}
+  .race-row b{font-family:var(--serif)}
+  .race-row span{color:var(--ink-2); font-size:.9rem}
+  .timeline{margin:6px 0 0; padding:0; list-style:none; position:relative}
+  .timeline::before{content:"";position:absolute; left:7px; top:6px; bottom:10px; width:2px; background:linear-gradient(var(--gold-2),transparent)}
+  .timeline li{position:relative; padding:0 0 14px 30px}
+  .timeline li::before{content:"";position:absolute; left:2px; top:4px; width:12px;height:12px;border-radius:50%; background:var(--ember); border:2px solid var(--gold-2)}
+  .timeline .tage{font-family:var(--ui); font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; color:var(--gold); display:block}
+  .timeline .tt{font-weight:700}
+
+  /* ===== Relations ===== */
+  .rel-block{margin-bottom:24px}
+  .rel-block h3{font-family:var(--display); font-size:1.05rem; letter-spacing:.02em; margin:0 0 4px; color:var(--ink)}
+  .rel-block .rsub{font-family:var(--ui); font-size:.82rem; color:var(--ink-2); margin:0 0 12px}
+  .chain{display:flex; flex-wrap:wrap; align-items:flex-start; gap:4px}
+  .node{display:flex; flex-direction:column; align-items:center; width:86px; text-align:center; flex:none}
+  .node .medallion{width:54px;height:54px;margin:0 0 5px}
+  .node .medallion svg{width:27px;height:27px}
+  .node small{font-family:var(--ui); font-size:.72rem; line-height:1.15; color:var(--ink)}
+  .node.locked .medallion{background:var(--panel-2);border-color:var(--line-2);color:var(--ink-3)}
+  .node.locked small{color:var(--ink-3)}
+  .arrow{display:flex; flex-direction:column; align-items:center; justify-content:flex-start; color:var(--gold); flex:none; min-width:52px; padding-top:16px}
+  .arrow svg{width:28px;height:12px}
+  .arrow em{font-style:normal; font-family:var(--ui); font-size:.62rem; color:var(--ink-2); text-align:center; line-height:1.1; margin-top:3px}
+  .nine{display:grid; grid-template-columns:repeat(auto-fill,minmax(90px,1fr)); gap:12px;
+    border:1px solid var(--line-2); border-radius:var(--radius); background:var(--panel); padding:16px}
+  .nine .node{width:auto}
+  .ninecap{font-family:var(--ui); font-size:.78rem; color:var(--ink-3); margin-top:10px; text-align:center}
+
+  /* ===== Character diary ===== */
+  .cd .arc{margin-top:14px}
+  .cd .arc h4{font-family:var(--ui); text-transform:uppercase; letter-spacing:.08em; font-size:.72rem;
+    color:var(--gold); margin:0 0 8px; display:flex; align-items:center; gap:7px}
+  .arc-tl{margin-top:0}
+  .arc-tl li{padding-bottom:11px}
+  .arc-tl .tage{font-size:.67rem}
+  .ahead{margin-top:12px; display:flex; gap:9px; align-items:flex-start; font-size:.92rem;
+    background:color-mix(in srgb,var(--elven) 12%, var(--panel));
+    border:1px solid color-mix(in srgb,var(--elven) 32%, transparent); border-radius:10px; padding:10px 12px}
+  .ahead svg{width:16px; height:16px; color:var(--elven); flex:none; margin-top:2px}
+  .ahead b{color:var(--ink)}
+
+  /* ===== Chapter illustration ===== */
+  .illus{margin:6px 0 16px; border:1px solid var(--line-2); border-radius:14px; overflow:hidden;
+    background:var(--panel-2); box-shadow:0 10px 24px -16px var(--shadow)}
+  .illus svg, .illus img{display:block; width:100%; height:auto}
+  .illus figcaption{padding:11px 15px; font-size:.92rem; color:var(--ink); line-height:1.5; background:var(--panel)}
+  .illus figcaption b{color:var(--ember); font-family:var(--ui); font-size:.7rem; text-transform:uppercase;
+    letter-spacing:.06em; margin-right:4px}
+
+  /* ===== Info ===== */
+  .info{margin-top:26px; border:1px solid var(--line); border-radius:12px; background:var(--panel-2); padding:12px 16px;
+    font-family:var(--ui); font-size:.82rem; color:var(--ink-2)}
+  .info summary{cursor:pointer; font-weight:700; color:var(--ink)}
+  .info a{color:var(--ember)}
+  .foot{text-align:center; font-family:var(--ui); font-size:.72rem; color:var(--ink-3); margin-top:26px}
+
+  @media (max-width:560px){
+    .brand p{display:none}
+    .cd{flex-direction:column; align-items:stretch}
+    .cd-pimg{width:min(260px,62vw); align-self:center}
+    .char-grid{grid-template-columns:repeat(auto-fill,minmax(45%,1fr))}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none !important; transition:none !important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="top-in">
+      <div class="brand">
+        <svg class="crest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20L15 9M15 9l1.6-1.6M15 9l-1.6-1.6M15 9l1.6 1.6M15 9l-1.6 1.6"/><path d="M19.2 3.4l.8 1.8 1.8.8-1.8.8-.8 1.8-.8-1.8-1.8-.8 1.8-.8z" fill="currentColor" stroke="none"/></svg>
+        <div>
+          <p class="series-title">Letopisy Narnie</p>
+          <h1 data-i18n="brand_title">Lev, čarodějnice a skříň</h1>
+          <p data-i18n="brand_sub">Průvodce první cestou do Narnie — pro předčítání</p>
+        </div>
+      </div>
+      <div class="modeswitch" id="modeswitch">
+        <button data-mode="rodic" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v18M5 8l7-4 7 4M6 20h12" stroke-linecap="round"/></svg><span data-i18n="mode_parent">Rodiče</span></button>
+        <button data-mode="deti" class="kids"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3"/><circle cx="16" cy="9" r="2.4"/><path d="M3.5 20c.4-3 2.8-5 5.5-5s5.1 2 5.5 5M14 20c.3-2.2 1.8-3.7 3.6-3.9" stroke-linecap="round"/></svg><span data-i18n="mode_kids">Děti</span></button>
+      </div>
+      <button class="iconbtn" id="themeToggle" type="button" title="Světlý / tmavý motiv" aria-label="Přepnout motiv"></button>
+    </div>
+    <div class="road">
+      <div class="road-in">
+        <span data-i18n="journey">Cesta Narnií</span>
+        <div class="road-track"><div class="road-fill" id="roadFill"></div></div>
+        <span><b id="chDone">0</b>/17 <span data-i18n="chapters_of">kapitol</span> · <b id="miles">0</b> <span data-i18n="miles_unit">bodů pro Aslana</span></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <nav class="tabs" id="tabs" role="tablist" aria-label="Sekce">
+      <button data-view="audio" class="on" role="tab" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 14v-1a8 8 0 0116 0v1"/><rect x="2" y="14" width="4.5" height="7" rx="2"/><rect x="17.5" y="14" width="4.5" height="7" rx="2"/></svg><span>Audio</span></button>
+      <button data-view="kapitoly" role="tab" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5c2-1 5-1 8 1 3-2 6-2 8-1v14c-2-1-5-1-8 1-3-2-6-2-8-1z"/><path d="M12 7v13"/></svg><span data-i18n="tab_chapters">Kapitoly</span></button>
+      <button data-view="postavy" role="tab" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c.6-3.6 3.2-6 6.5-6s5.9 2.4 6.5 6"/></svg><span data-i18n="tab_characters">Postavy</span></button>
+      <button data-view="svet" role="tab" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg><span data-i18n="tab_world">Svět</span></button>
+    </nav>
+
+    <!-- AUDIO -->
+    <section class="view on" id="view-audio">
+      <p class="audio-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-1a8 8 0 0116 0v1"/><rect x="2" y="14" width="4.5" height="7" rx="2"/><rect x="17.5" y="14" width="4.5" height="7" rx="2"/></svg><span>Namluvené kapitoly — poslouchej spolu s knihou, nebo místo předčítání. Kapitoly bez nahrávky se doplní postupně.</span></p>
+      <div id="audioList"></div>
+    </section>
+
+    <!-- KAPITOLY -->
+    <section class="view" id="view-kapitoly"><div id="chapters"></div></section>
+
+    <!-- POSTAVY -->
+    <section class="view" id="view-postavy">
+      <div class="subseg" id="subseg">
+        <button data-sub="galerie" class="on">Galerie</button>
+        <button data-sub="vztahy">Vztahy</button>
+      </div>
+      <div id="sub-galerie">
+        <p class="charhint" id="charHint"></p>
+        <div class="char-grid" id="charGrid"></div>
+      </div>
+      <div id="sub-vztahy" hidden>
+        <p class="charhint" id="relHint"></p>
+        <div id="relations"></div>
+      </div>
+    </section>
+
+    <!-- SVĚT -->
+    <section class="view" id="view-svet">
+      <p class="charhint" data-i18n="world_intro">Malá encyklopedie země Narnie — hoď děti do obrazu. V režimu Děti se odkrývá postupně: co by prozradilo děj, zůstává skryté, dokud k tomu nedočtete.</p>
+      <div id="world"></div>
+    </section>
+
+    <details class="info">
+      <summary>Jak to funguje · o jménech</summary>
+      <p><b>Dva režimy.</b> <i>Rodiče</i> = příprava na čtení (shrnutí, na co se zaměřit, otázky pro děti, „metr strašidelnosti"). <i>Děti</i> = bez spoilerů, jen to, co jste už četli, plus kvízy a sbírání postav.</p>
+      <p><b>Odemykání.</b> U každé kapitoly klikni na <i>Přečteno</i> — přibudou body pro Aslana a odemknou se nové postavy. Postup se ukládá v prohlížeči.</p>
+      <p><b>Jména.</b> Jména držíme v českém překladu knihy (u některých jmen se vydání liší, viz README). Názvy kapitol jsou vlastní parafráze, ne doslovný text knihy — pro jistotu je porovnej s vaším výtiskem.</p>
+    </details>
+    <p class="foot">S láskou předčítal TÁTA ❤️</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  // ===== icons =====
+  var IC = {
+    headphones:'<path d="M4 14v-1a8 8 0 0116 0v1"/><rect x="2" y="14" width="4.5" height="7" rx="2"/><rect x="17.5" y="14" width="4.5" height="7" rx="2"/>',
+    town:'<path d="M4 20h16M6 20v-8l6-4 6 4v8M10 20v-4h4v4"/>',
+    forest:'<path d="M12 3l5 8H7zM12 8l6 9H6zM12 17v3"/>',
+    mountain:'<path d="M3 19l6-11 4 6 3-5 5 10z"/>',
+    water:'<path d="M3 8c3-3 6 3 9 0s6 3 9 0M3 13c3-3 6 3 9 0s6 3 9 0M3 18c3-3 6 3 9 0s6 3 9 0"/>',
+    star:'<path d="M12 3l2.4 5.6 6 .5-4.6 4 1.4 5.9L12 16.9 6.8 19l1.4-5.9L3.6 9.1l6-.5z"/>',
+    zamek:'<path d="M4 21V10l2-2v3h2V8l2-2v3h2V6l2 2v3h2V8l2 2v11z"/><path d="M4 21h16"/>',
+    kamen:'<path d="M12 3l7 5-2.5 11h-9L5 8z"/>',
+    kouzelnik:'<path d="M12 3L7 19h10zM5 19h14"/><circle cx="12" cy="12.5" r=".9" fill="currentColor" stroke="none"/>',
+    mudla:'<path d="M12 3v10M9.5 13h5M12 13v6M12 19l-1.4 1M12 19l1.4 1"/>',
+    obr:'<circle cx="12" cy="6.4" r="3"/><path d="M6.2 21v-6.5a5.8 5.8 0 0111.6 0V21"/>',
+    kentaur:'<circle cx="12" cy="7" r="2.5"/><path d="M12 9.5v3.5M6 20l4.5-7h3L18 20M8 20h8"/>',
+    duch:'<path d="M6 20V11a6 6 0 0112 0v9l-2-2-2 2-2-2-2 2-2-2z"/><circle cx="9.5" cy="10.5" r=".6" fill="currentColor" stroke="none"/><circle cx="14.5" cy="10.5" r=".6" fill="currentColor" stroke="none"/>',
+    zvire:'<circle cx="12" cy="15" r="3.4"/><circle cx="7" cy="9" r="1.6"/><circle cx="11" cy="6.5" r="1.6"/><circle cx="15" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/>',
+    skret:'<path d="M12 4c-3 0-5 2.2-5 5.5 0 2 .8 3.6 2 4.8L8 20h8l-1-5.7c1.2-1.2 2-2.8 2-4.8C17 6.2 15 4 12 4z"/><path d="M7.5 9L5.5 7.5M16.5 9l2-1.5"/>',
+    skritek:'<path d="M12 4c-2.5 3-2.5 5 0 7 2.5-2 2.5-4 0-7Z"/><circle cx="9" cy="14" r="2.2"/><circle cx="15" cy="14" r="2.2"/><path d="M8 20c.5-2.5 2-3.5 4-3.5s3.5 1 4 3.5"/>',
+    eye:'<path d="M2 12c3-5 7-7 10-7s7 2 10 7c-3 5-7 7-10 7s-7-2-10-7z"/><ellipse cx="12" cy="12" rx="1.5" ry="3.6" fill="currentColor" stroke="none"/>',
+    flame:'<path d="M12 3c1 4-3 5-3 9a3 3 0 006 0c0-2-1-3-1.2-4.5C16 9 17 11 17 13a5 5 0 01-10 0c0-5 3-6 5-10z"/>',
+    scroll:'<path d="M7 4h9a2 2 0 012 2v12a2 2 0 01-2 2H8a2 2 0 01-2-2V6"/><path d="M6 6a2 2 0 002 2h2"/><path d="M10 11h5M10 14h5"/>',
+    lock:'<rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/>',
+    sun:'<circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/>',
+    moon:'<path d="M20 14.5A8 8 0 019.5 4 7 7 0 1020 14.5z"/>',
+    globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/>',
+    clovek:'<circle cx="12" cy="7" r="3"/><path d="M6 21v-5a6 6 0 0112 0v5"/>',
+    faun:'<path d="M8 3c-1 2-1 4 1 5M16 3c1 2 1 4-1 5"/><circle cx="12" cy="11" r="3"/><path d="M12 14v4M9 20l3-2 3 2"/>',
+    lev:'<path d="M4 18l1.5-9 4 4L12 6l2.5 7 4-4L20 18z"/><path d="M4 20h16"/>',
+    check:'<path d="M4 12l5 5L20 6"/>'
+  };
+  function icon(name,cls){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"'+(cls?' class="'+cls+'"':'')+'>'+(IC[name]||IC.star)+'</svg>';}
+
+  // ===== state + drobní pomocníci (musí být definované dřív, než je kdokoli použije) =====
+  var KEY='narnia_lev_v1';
+  var state={mode:'rodic', theme:null, read:{}, quiz:{}};
+  try{var s=JSON.parse(localStorage.getItem(KEY)); if(s){state.mode=s.mode||'rodic'; state.theme=s.theme||null; state.read=s.read||{}; state.quiz=s.quiz||{};}}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+  function reachedGi(){var m=0; for(var k in state.read){if(state.read[k]&&+k>m)m=+k;} return m;}
+  function readCount(){var n=0; for(var k in state.read){if(state.read[k])n++;} return n;}
+  var $=function(s,r){return (r||document).querySelector(s);};
+  function el(tag,cls,html){var e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e;}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+
+  // ===== painted portraits (dodáš vlastní ilustrace, viz README) =====
+  var PORTRAITS={
+    lucie:'__IMG_lucie__',petr:'__IMG_petr__',zuzana:'__IMG_zuzana__',edmund:'__IMG_edmund__',
+    kirke:'__IMG_kirke__',macready:'__IMG_macready__',tumnus:'__IMG_tumnus__',jadis:'__IMG_jadis__',
+    trpaslik:'__IMG_trpaslik__',pbobr:'__IMG_pbobr__',pbobrova:'__IMG_pbobrova__',maugrim:'__IMG_maugrim__',
+    vanoce:'__IMG_vanoce__',aslan:'__IMG_aslan__',oreius:'__IMG_oreius__',rumblebuffin:'__IMG_rumblebuffin__',
+    mysi:'__IMG_mysi__',lesni:'__IMG_lesni__',jelen:'__IMG_jelen__'
+  };
+  function hasPortrait(id){var u=PORTRAITS[id];return !!(u&&u.slice(0,5)==='data:');}
+  function imgPortrait(id,alt){return hasPortrait(id)?'<img src="'+PORTRAITS[id]+'" alt="'+esc(alt||'')+'" loading="lazy">':null;}
+
+  var ILLUS={
+    1:{cap:'Lucie, Edmund, Zuzana a Petr stojí na prahu obrovského starého domu profesora Kirkea a poprvé zírají na jeho nekonečné chodby.'},
+    2:{cap:'Lucie vykročí ze skříně do tichého zasněženého lesa, kde pod lampou na pasece stojí malý faun s deštníkem a balíčky.'},
+    3:{cap:'Edmund se plíží skříní za Lucií a vychází do zasněženého lesa, kde mu do cesty přijedou saně Bílé čarodějnice.'},
+    4:{cap:'Bílá čarodějnice sedí v saních tažených sobem a podává Edmundovi kouzelný turecký med, zatímco kolem poletují sněhové vločky.'},
+    5:{cap:'Lucie, rozzlobená a uražená, utíká před ostatními přes rozsvícený dům, zatímco Edmund se jí nevlídně vysmívá.'},
+    6:{cap:'Všichni čtyři sourozenci se v kabátech z kožešin šourají zasněženým lesem za rozzářenou lampou.'},
+    7:{cap:'Pan a paní Bobrovi je vítají ve své bobří hrázi s tabulí jídla na stole — a šeptem zmiňují jméno Aslan.'},
+    8:{cap:'Čtveřice sourozenců s Bobry opouští hráz poté, co Edmund tiše zmizel — a Bílá čarodějnice se blíží.'},
+    9:{cap:'Edmund stojí nerozhodně v temném sále čarodějnicina zámku, ve kterém jsou po všech stranách kamenné sochy zkamenělých tvorů.'},
+    10:{cap:'Sněhová cesta mizí v bahně a v lese zaznívají první ptáčci, zatímco se sníh pod saněmi čarodějnice mění na vodu.'},
+    11:{cap:'Ve stanu na kopci stojí před Petrem, Zuzanou a Lucií mohutný zlatý lev Aslan s hřívou, která jako by vydávala sluneční světlo.'},
+    12:{cap:'Petr s mečem od Otce Vánoc zasáhne vlčího velitele Maugrima, který právě napadl Zuzanu u Aslanova tábora.'},
+    13:{cap:'V Aslanově táboře se Bílá čarodějnice dovolává starého zákona Narnie a Aslan jí naslouchá s vážnou tváří.'},
+    14:{cap:'Zuzana a Lucie sedí tiše vedle Aslana a hladí ho po zlaté hřívě, zatímco on pokorně kráčí k Kamennému stolu.'},
+    15:{cap:'Za svítání stojí Zuzana a Lucie u rozlomeného Kamenného stolu a z trosek k nim vychází živý Aslan.'},
+    16:{cap:'Aslan dýchá do zkamenělých tvorů uprostřed nádvoří čarodějnicina zámku a ti jeden po druhém ožívají.'},
+    17:{cap:'Čtyři vládci Narnie sedí na zlatých trůnech v Cair Paravelu, zatímco bílý jelen se mihne v lese za nimi.'}
+  };
+  // ===== painted chapter scenes (dodáš vlastní ilustrace, viz README) =====
+  var SCENES={1:'__SCENE_1__',2:'__SCENE_2__',3:'__SCENE_3__',4:'__SCENE_4__',5:'__SCENE_5__',6:'__SCENE_6__',7:'__SCENE_7__',8:'__SCENE_8__',9:'__SCENE_9__',10:'__SCENE_10__',11:'__SCENE_11__',12:'__SCENE_12__',13:'__SCENE_13__',14:'__SCENE_14__',15:'__SCENE_15__',16:'__SCENE_16__',17:'__SCENE_17__'};
+  function hasScene(n){var u=SCENES[n];return !!(u&&u.slice(0,5)==='data:');}
+  function illusFigure(gi){
+    if(!hasScene(gi)) return '';
+    var il=ILLUS[gi]; var cap=il?il.cap:'';
+    var capHtml=cap?'<figcaption><b>Klíčový moment:</b> '+esc(cap)+'</figcaption>':'';
+    return '<figure class="illus"><img src="'+SCENES[gi]+'" alt="Malovaná ilustrace ke kapitole" loading="lazy">'+capHtml+'</figure>';
+  }
+
+  // ===== data: audio nahrávky (gi -> cesta k souboru) =====
+  var AUDIO={};
+
+  // ===== data: postavy =====
+  var CHARS = [
+    {id:'lucie',gi:1,name:'Lucie Pevensieová',en:'Lucy Pevensie',race:'clovek',rlab:'Nejmladší z dětí',ic:'clovek',
+      kid:'Nejmladší ze čtyř sourozenců — zvědavá, odvážná a upřímná. Právě ona jako první objeví cestu do jiného světa.',
+      dad:'Nejmladší Pevensieová, která v knize jako první poznává Narnii. Její upřímnost a nepředpojatost kontrastují s pochybnostmi dospělých i ostatních dětí.'},
+    {id:'petr',gi:1,name:'Petr Pevensie',en:'Peter Pevensie',race:'clovek',rlab:'Nejstarší z dětí',ic:'clovek',
+      kid:'Nejstarší bratr, který se snaží být rozumný a za všechny zodpovědný. V Narnii z něj bude statečný bojovník.',
+      dad:'Nejstarší z dětí, jehož role „velitele" se vyvíjí od nejistého teenagera po vůdce narnijského vojska. Jeho odvaha se však rodí až z přijatých povinností.'},
+    {id:'zuzana',gi:1,name:'Zuzana Pevensieová',en:'Susan Pevensie',race:'clovek',rlab:'Starší sestra',ic:'clovek',
+      kid:'Rozvážná a starostlivá starší sestra, která by nejraději řešila všechno pěkně rozumem. V Narnii ale pozná, že rozum ne vždycky stačí.',
+      dad:'Druhé nejstarší dítě, praktická a opatrná. Její skepse vůči příběhu o Narnii je zpočátku stejně silná jako Petrova, než ji přesvědčí vlastní zkušenost.'},
+    {id:'edmund',gi:1,name:'Edmund Pevensie',en:'Edmund Pevensie',race:'clovek',rlab:'Prostřední bratr',ic:'clovek',
+      kid:'Druhý nejmladší bratr, který rád škádlí a zlobí ostatní. Mívá tvrdohlavé nápady a v Narnii se dostane do pořádné klopýtnutí.',
+      dad:'Prostřední Pevensie, nejistý a často zlomyslný — zejména ke Lucii. Je zranitelný vůči svodům a jeho příběh o selhání a smíření je jednou z hlavních dějových linií.'},
+    {id:'kirke',gi:1,name:'Profesor Kirke',en:'Professor Kirke',race:'clovek',rlab:'Starý profesor',ic:'clovek',
+      kid:'Starý, trochu rozcuchaný profesor, ve kterého domě děti bydlí. Zdá se zvláštní — ale možná ví víc, než dává najevo.',
+      dad:'Majitel domu, který děti ubytuje během války. Jeho rozumné, ale podivné odpovědi na Luciiny příběhy naznačují, že o Narnii ví víc, než přiznává.'},
+    {id:'macready',gi:1,name:'Paní Macreadyová',en:'Mrs Macready',race:'clovek',rlab:'Hospodyně',ic:'clovek',
+      kid:'Přísná hospodyně velkého domu, která má ráda ticho a pořádek. Děti, které se hlučně pohybují po domě, jí rozhodně nejsou po chuti.',
+      dad:'Přísná hospodyně profesorova domu. Její pravidla (zákaz hluku, zákaz do některých pokojů) vedou děti k tomu, aby se ukryly právě v pokoji se skříní.'},
+    {id:'tumnus',gi:2,name:'Pan Tumnus',en:'Mr Tumnus',race:'faun',rlab:'Faun',ic:'faun',say:'tum-nus',
+      kid:'Laskavý faun s kozíma nohama, rohy a červeným šátkem, který Lucii pozve na čaj. Je trochu smutný — ale proč?',
+      dad:'Faun, který Lucii přivítá s přátelstvím, ale má těžké tajemství. Jeho příběh je ukázkou toho, jak i laskavý tvor může být nucený k zradě — a jak se rozhodnout správně.'},
+    {id:'jadis',gi:4,name:'Bílá čarodějnice',en:'The White Witch (Jadis)',race:'zlo',rlab:'Královna Narnie',ic:'eye',
+      kid:'Vysoká, krásná a chladná čarodějnice, která si říká královna Narnie. V její zemi je pořád zima — ale Vánoce nikdy nepřijdou.',
+      dad:'Zlá vládkyně, která drží Narnii ve věčné zimě a proměňuje své nepřátele v kámen. Její svůdnost je zbraní stejně nebezpečnou jako její moc.'},
+    {id:'trpaslik',gi:4,name:'Čarodějnicin trpaslík',en:"The Witch's Dwarf",race:'trpaslik',rlab:'Sluha čarodějnice',ic:'skret',
+      kid:'Malý, drsný a mlčenlivý trpaslík, který řídí čarodějniny saně a plní všechny její rozkazy.',
+      dad:'Věrný (či spíš poslušný) sluha Bílé čarodějnice. Je zosobněním chladné poslušnosti, která nepochybuje o rozkazech.'},
+    {id:'pbobr',gi:7,name:'Pan Bobr',en:'Mr Beaver',race:'zvire',rlab:'Mluvící bobr',ic:'zvire',
+      kid:'Hovorný bobr, který děti přijme do své hráze a prozradí jim tajemství o Aslanovi. Je statečný — a trochu křiklavý.',
+      dad:'Hovorný, praktický bobr, který se stává dětským průvodcem k Aslanovi. Jeho prostá, upřímná loajalita vůči „pravému králi" je příkladem narnijské víry.'},
+    {id:'pbobrova',gi:7,name:'Paní Bobrová',en:'Mrs Beaver',race:'zvire',rlab:'Mluvící bobřice',ic:'zvire',
+      kid:'Starostlivá bobřice, která děti pohostí výborným obědem a stará se o to, aby měly všechno, co potřebují.',
+      dad:'Hospodárná a starostlivá bobřice, která udržuje domácí pohodu. Její praktičnost doplňuje manželovo nadšení.'},
+    {id:'maugrim',gi:8,name:'Maugrim',en:'Maugrim (Fenris Ulf)',race:'zlo',rlab:'Šéf tajné policie',ic:'zvire',say:'mau-grim',
+      kid:'Vlčí velitel čarodějnicina tajného vojska — rychlý, zlý a nebezpečný. Když se objeví, znamená to velké potíže.',
+      dad:'Velitel vlčí tajné policie Bílé čarodějnice. Jeho role v knize je dvojí: hrozba i jedna z prvních Petrových zkoušek jako bojovníka.'},
+    {id:'vanoce',gi:10,name:'Otec Vánoc',en:'Father Christmas',race:'clovek',rlab:'Dárce',ic:'clovek',
+      kid:'Veselý, bělovousý Otec Vánoc v červeném, který přináší dárky, jaké děti ještě nikdy nedostaly. Jeho příchod znamená, že se zima láme.',
+      dad:'Jeho příchod je znamením, že kletba čarodějnice slábne. Dárky pro děti nejsou hračky, ale nástroje pro nadcházející zkoušku.'},
+    {id:'aslan',gi:7,name:'Aslan',en:'Aslan',race:'lev',rlab:'Velký lev',ic:'lev',say:'as-lan',
+      kid:'Obrovský zlatý lev, o kterém se mluví s úctou a trochou strachu. Prý je dobrý — ale rozhodně není krotký.',
+      dad:'Pravý král Narnie a postava, kolem které se točí celé vyprávění. Jeho velikost, moudrost i dobrota jsou ukázkou toho, co je skutečná autorita.'},
+    {id:'oreius',gi:12,name:'Oreius',en:'Oreius',race:'zvire',rlab:'Kentaur, Aslanův generál',ic:'kentaur',
+      kid:'Mohutný kentaur, který velí Aslanovu vojsku. Spolehlivý a statečný, v bitvě vedle Petra bojuje s mečem v ruce.',
+      dad:'Aslanův generál, který pomáhá Petrovi přijmout velitelskou roli. Jeho loajalita a bojové dovednosti jsou oporou celého tábora.'},
+    {id:'rumblebuffin',gi:16,name:'Obr Rumblebuffin',en:'Giant Rumblebuffin',race:'obr',rlab:'Probuzený obr',ic:'obr',
+      kid:'Obrovský obr, který byl dlouho zakletý v kameni. Když ožije, je tak milý a nešikovný, že se děti nemohou přestat smát.',
+      dad:'Jeden z probuzených zkamenělých tvorů. Jeho obrovská síla je spojená s dobrým srdcem a komickou nešikovností.'},
+    {id:'mysi',gi:15,name:'Myši',en:'The Mice',race:'zvire',rlab:'Aslanovy pomocnice',ic:'zvire',
+      kid:'Malinké myšky, které se v nejtemnější chvíli neúnavně pustí do práce — a ukážou, že i ti nejmenší mohou udělat něco velkého.',
+      dad:'Myši, které obětavě pomáhají v klíčové chvíli příběhu. Jsou připomínkou toho, že velké věci často závisí na malých pomocnících.'},
+    {id:'lesni',gi:11,name:'Dryády a Naiády',en:'Dryads and Naiads',race:'faun',rlab:'Lesní a vodní bytosti',ic:'faun',
+      kid:'Lesní vílky a vodní nymfy, které se probouzejí z dlouhého zimního spánku, jakmile se v Narnii znovu objeví Aslan.',
+      dad:'Duchové stromů a potoků, kteří oživují s příchodem jara. Jejich pozdrav Aslanovi je jedním z nejpůvabnějších momentů vyprávění.'},
+    {id:'jelen',gi:17,name:'Bílý jelen',en:'The White Stag',race:'zvire',rlab:'Kouzelný jelen',ic:'zvire',
+      kid:'Pohádkový bílý jelen, jehož když někdo uloví, splní mu jedno přání. Honí se za ním — a kam zavede?',
+      dad:'Legendární zvíře narnijských lesů, jehož pronásledování uzavírá celé vyprávění. Jeho role je symbolická — jako přechod z jednoho života do druhého.'}
+  ];
+  var CHARMAP={}; CHARS.forEach(function(c){CHARMAP[c.id]=c;});
+  var SHORT={lucie:'Lucie',petr:'Petr',zuzana:'Zuzana',edmund:'Edmund',aslan:'Aslan',jadis:'Čarodějnice',tumnus:'Tumnus',pbobr:'Pan Bobr',pbobrova:'Paní Bobrová',oreius:'Oreius'};
+
+  // ===== deníček postavy: co prožila po kapitolách (gi) + otázka k zamyšlení =====
+  var ARC={
+    lucie:{ahead:'Věřil bys sourozenci, který ti vypráví o něčem neuvěřitelném, kdyby ses to nikdy sám nezažil?',beats:[
+      [1,'Při hře na schovávanou vleze do staré skříně — a ocitne se v zasněženém lese.'],
+      [2,'V Narnii se spřátelí s faunem panem Tumnusem, který ji pozve na čaj.'],
+      [5,'Nikdo ji nebere vážně, když vypráví o Narnii — i když říká pravdu.'],
+      [6,'Znovu s ostatními prochází skříní a ukáže sourozencům Narnii.'],
+      [15,'Spolu se Zuzanou je svědkyní zázraku u Kamenného stolu.'],
+      [16,'Vlastním léčivým lektvarem pomáhá zraněným po bitvě.'],
+      [17,'Spolu s ostatními se stane královnou Narnie.']
+    ]},
+    edmund:{ahead:'Co si myslíš, že vede Edmunda k tomu, aby se choval ke sestře tak zle?',beats:[
+      [3,'Poprvé vkročí do Narnie a potká tam Bílou čarodějnici.'],
+      [4,'Čarodějnice ho láká na turecký med a slibuje mu, že z něj udělá prince, pokud přivede ostatní.'],
+      [5,'Přede všemi popírá, že v Narnii někdy byl, a Lucii urazí.'],
+      [8,'Tajně opustí hráz Bobrových a vydá se za čarodějnicí.'],
+      [9,'Zjistí, jak moc se spletl, ale už je pozdě.'],
+      [12,'Je zachráněn z moci čarodějnice Aslanovými společníky.'],
+      [13,'Aslan si s ním potichu promluví a Edmund pochopí, co provedl.'],
+      [16,'V bitvě zničí čarodějnicinu hůlku a pomůže rozhodnout boj.']
+    ]},
+    petr:{ahead:'Jak se ti líbí, že Petr se musí z kluka rychle stát vůdcem?',beats:[
+      [1,'Jako nejstarší se snaží být ten rozumný, který dohlíží na ostatní.'],
+      [6,'Poprvé vstoupí do Narnie a postaví se po boku sourozenců.'],
+      [12,'Zabije vlčího velitele Maugrima a zachrání sestru.'],
+      [16,'Vede narnijské vojsko do rozhodující bitvy.'],
+      [17,'Stane se Velkým králem Narnie.']
+    ]},
+    zuzana:{ahead:'Myslíš, že je lepší se spoléhat na rozum, nebo občas i na srdce?',beats:[
+      [1,'Starší sestra, která se snaží dohlédnout, aby se nikomu nic nestalo.'],
+      [6,'Zpočátku je opatrná a pochybovačná, ale v Narnii se postupně změní.'],
+      [12,'Je napadena vlkem Maugrimem a zachráněna Petrem.'],
+      [14,'Doprovází Aslana na jeho nejtěžší cestě.'],
+      [17,'Stane se královnou Narnie.']
+    ]},
+    tumnus:{ahead:'Co by ses rozhodl udělat, kdyby tě někdo nutil udělat něco, co víš, že je špatné?',beats:[
+      [2,'Pozve Lucii na čaj do své jeskyně a hraje jí na flétnu.'],
+      [2,'Přizná, že jí chtěl ublížit, ale nedokáže to.'],
+      [6,'Vyjde najevo, že byl za svůj čin zatčen.'],
+      [16,'Je osvobozen ze zakletí v kameni a vrátí se k přátelům.']
+    ]},
+    jadis:{ahead:'Proč se podle tebe čarodějnice bojí právě toho, že se zima láme?',beats:[
+      [4,'Přepadne Edmunda lstí a chce, aby přivedl sourozence.'],
+      [9,'Sleduje je s vlčí družinou po zasněžených cestách.'],
+      [10,'Její moc slábne a cestou se jí rozpouští sníh pod saněmi.'],
+      [13,'Žádá, aby jí byl vydán Edmund podle starého zákona Narnie.'],
+      [16,'Je poražena v bitvě a její vláda končí.']
+    ]},
+    aslan:{ahead:'Co myslíš, že znamená, když je někdo „dobrý, ale ne krotký"?',beats:[
+      [7,'Jeho jméno se zmiňuje s úctou i strachem.'],
+      [11,'Děti se s ním konečně setkají v jeho táboře.'],
+      [13,'Rozhodne se pro nejtěžší možnou cestu.'],
+      [15,'Vrací se zpátky silnější než dřív.'],
+      [16,'Vede bitvu a osvobozuje zakleté.'],
+      [17,'Korunuje čtyři děti na vládce Narnie.']
+    ]},
+    pbobr:{ahead:'Jak se ti líbí, že malý bobr dokáže mít takovou důvěru ve velkého lva?',beats:[
+      [7,'Ve své hrázi přijímá děti jako hosty a vypráví jim o Aslanovi.'],
+      [8,'Pomáhá ostatním utéct před čarodějnicí.'],
+      [11,'Doprovází děti do Aslanova tábora.']
+    ]},
+    maugrim:{ahead:'Co se stane, když se hrozivý nepřítel postaví zrovna na tu nejslabší?',beats:[
+      [8,'Je vyslán sledovat děti a rozptýlit je.'],
+      [12,'Napadne Zuzanu a je poražen Petrovým mečem.']
+    ]},
+    vanoce:{ahead:'Jaký dárek by sis ty přál od Otce Vánoc?',beats:[
+      [10,'Přijede v saních a dětem dá dárky, které jim pomohou v nadcházejících bojích.']
+    ]},
+    mysi:{ahead:'Proč se podle tebe právě ti nejmenší zachovali tak odvážně?',beats:[
+      [15,'Prokoušou provazy, které svazují Aslana, a dokazují, že malá věc může změnit velké události.']
+    ]},
+    rumblebuffin:{ahead:'Jak ti připadá obr, který se bojí menších věcí než on sám?',beats:[
+      [16,'Je probuzen z kamenného zakletí Aslanovým dechem.']
+    ]}
+  };
+
+  var RACES=[
+    ['clovek','Lidé (Adamovi synové a Evy dcery)','Děti, které přijdou z našeho světa. V Narnii jsou něčím vzácným a prorokovaným — podle starých pověstí mají jednou narnijský trůn obsadit.'],
+    ['faun','Fauni a lesní bytosti','Pěkní, hudební tvorové s kozíma nohama, kteří žijí v lesích. K nim patří i dryády (duchové stromů) a naiády (vodní víly).'],
+    ['zvire','Mluvící zvířata','Bobři, vlci, myši a spousta dalších tvorů, kteří v Narnii umí mluvit a rozumět. Jsou věrní, ale i nebezpeční, podle toho, na čí straně stojí.'],
+    ['lev','Aslan','Velký lev, pravý král Narnie. Nikdo ho nedokáže přesně popsat — děti ho pochopí až osobně.'],
+    ['obr','Obři','Mohutní, někdy hloupí, někdy laskaví tvorové, kteří žijí v narnijských horách.'],
+    ['trpaslik','Trpaslíci','Malí, odolní tvorové. Někteří slouží dobru, někteří zlu.'],
+    ['zlo','Zlé bytosti','Tvorové, kteří sloužili Bílé čarodějnici: vlci, obři, čarodějné bytosti a stíny. Jsou vázáni její vůlí.']
+  ];
+  var TL=[
+    ['Za války','Děti opouštějí Londýn','Čtyři sourozenci Pevensieovi jsou kvůli válce posláni z Londýna na venkov, do domu starého profesora.'],
+    ['První dny','Velký dům','Zvědavé děti prozkoumávají rozlehlý dům s mnoha pokoji, dokud jedno z nich neobjeví něco neobvyklého.'],
+    ['Teď','Skříň','Nejmladší z nich, Lucie, otevře dveře staré skříně — a na druhé straně nalezne to, co nikdo nečekal.']
+  ];
+  var LORE=[
+    {ic:'zamek',min:2,title:'Narnie',text:'Tajemná země na druhé straně skříně — lesy, hory, řeky a mluvící zvířata. Je tu věčná zima, ale říká se, že všechno se brzy změní.'},
+    {ic:'eye',min:4,title:'Bílá čarodějnice',text:'Vládkyně Narnie, která svou kouzelnou mocí udržuje zemi ve věčné zimě. Kdo se jí postaví, promění se v kámen.'},
+    {ic:'lev',min:7,title:'Aslan',text:'Pravý král Narnie a jeden z nejzáhadnějších hrdinů celé knihy. Mluví se o něm šeptem — a s láskou.'},
+    {ic:'scroll',min:13,title:'Hluboké kouzlo',text:'Starý zákon Narnie, který platí od nepaměti. Říká, co se má stát se zrádcem — a nikdo, ani král, nemůže zákon zrušit.'},
+    {ic:'star',min:17,title:'Cair Paravel',text:'Zámek na narnijském pobřeží, kde sídlí vládci země. Tam čtyři děti nakonec usednou na trůny.'}
+  ];
+  // ===== data: kapitoly =====
+  var CH = [
+    {gi:1,title:'Lucie nahlédne do skříně',en:'Lucy Looks into a Wardrobe',fear:1,
+      sum:'Za války jsou čtyři sourozenci — Petr, Zuzana, Edmund a Lucie — posláni z Londýna na venkov k starému profesoru Kirkemu. Jeho dům je obrovský, plný zapomenutých chodeb a pokojů. Při hře na schovávanou vleze Lucie do prázdného pokoje s velkou starou skříní — a když skříní prochází dozadu, ocitne se ve sněhu.',
+      focus:['Proč jsou děti posláni z Londýna a jaký je dům profesora Kirkea','Přísná hospodyně paní Macreadyová a pravidla v domě','Co Lucie ve skříni objeví'],
+      q:['Co bys dělal ty, kdybys byl poslán na několik měsíců do cizího domu bez rodičů?','Jaká je ta skříň a proč podle tebe vede právě tam?'],
+      words:[['evakuace','poslání dětí z města do bezpečí na venkov za války'],['skříň','velký nábytek, kam se věší šaty']],
+      teaser:'V jednom pokoji domu stojí stará skříň. Nikdo o ní nic neví — dokud ji nejmladší z dětí neotevře.',
+      quiz:[['Proč jsou děti posláni k profesoru Kirkemu?',['Kvůli válce','Za trest','Na prázdniny'],0],['Co Lucie objeví ve skříni?',['Zasněžený les','Svou ztracenou hračku','Další pokoj'],0]]},
+    {gi:2,title:'Co tam Lucie našla',en:'What Lucy Found There',fear:2,
+      sum:'Lucie v zasněženém lese pod lampou potká podivného tvora — malého fauna s kozíma nohama, rohy a červeným šátkem, který nese balíčky a deštník. Pan Tumnus ji pozve na čaj do své jeskyně, hraje jí na flétnu a vypráví o Narnii, kde je pořád zima. Pak se ale rozpláče a Lucie zjistí, že má nějaké tajemství.',
+      focus:['Setkání s panem Tumnusem, prvním Narniancem','Proč je v Narnii pořád zima a Vánoce nikdy nepřijdou','Tumnusovo tajemné a smutné přiznání'],
+      q:['Proč myslíš, že faun pláče, i když je k Lucii tak laskavý?','Jaký by byl tvůj první dojem z místa, kde je pořád zima, ale Vánoce nikdy nepřijdou?'],
+      words:[['faun','tvor s lidskou horní polovinou a kozí dolní polovinou'],['Narnie','kouzelná země na druhé straně skříně']],
+      fearnote:'Mírně napínavé, ale hlavně laskavé a pohádkové — žádné skutečné nebezpečí.',
+      teaser:'V zasněženém lese svítí lampa a pod ní stojí podivný tvor s deštníkem. Co tu dělá — a kdo to je?',
+      quiz:[['Koho Lucie v lese potká?',['Fauna pana Tumnuse','Bílého medvěda','Starého rybáře'],0],['Co se stane, když Lucie vyleze ze skříně?',['Zjistí, že uplynula jen chvilka','Je pryč několik týdnů','Nic'],0]]},
+    {gi:3,title:'Edmund a skříň',en:'Edmund and the Wardrobe',fear:2,
+      sum:'Lucie sourozencům vypráví o své cestě skříní, ale nikdo jí nevěří. Edmund se jí navíc posmívá. Při další hře na schovávanou vleze do skříně sám — a ocitne se v témže zasněženém lese, kde se k němu nečekaně přiblíží zvláštní žena v saních tažených sobem.',
+      focus:['Proč Luciin příběh nikdo nebere vážně','Edmundova zlomyslnost vůči Lucii','První setkání s tajemnou Královnou'],
+      q:['Co bys řekl, kdyby ti kamarád vyprávěl, že prošel skříní do jiného světa?','Proč myslíš, že se Edmund chová k Lucii tak hrubě?'],
+      words:[['sob','velký jelen, který žije v chladných krajích'],['saně','vůz bez kol, který se pohybuje po sněhu']],
+      teaser:'Tentokrát vleze do skříně Edmund — a zjistí, že Luciin příběh vůbec není výmysl.',
+      quiz:[['Kdo ve skříni objeví Narnii jako druhý?',['Edmund','Petr','Zuzana'],0],['Čím cestuje tajemná žena?',['Saněmi tažených sobem','Kočárem','Pěšky'],0]]},
+    {gi:4,title:'Turecký med',en:'Turkish Delight',fear:2,
+      sum:'Tajemná žena se představí jako Královna Narnie, nabídne Edmundovi horký nápoj a kouzelný turecký med — sladkost, po které se nemůže přestat toužit. Slíbí mu, že z něj udělá prince, pokud ostatní sourozence přivede k ní. Edmund se se Lucií nakonec potká zpátky u skříně a vrátí se s ní domů.',
+      focus:['Kdo je Královna a co doopravdy chce','Jak kouzelný turecký med působí na Edmunda','Proč Edmund nechce Lucii potvrdit, že byla v Narnii'],
+      q:['Proč myslíš, že Královna Edmundovi nabídla zrovna sladkost?','Jak by ses cítil, kdybys něco moc chtěl a bylo by to „od zlých lidí"?'],
+      words:[['turecký med','sladkost z cukru, škrobu a oříšků'],['princ','syn krále, který bude jednou vládnout']],
+      fearnote:'Znepokojivé — svádění k zradě je podané nenásilně, ale s jasným upozorněním, že je to nebezpečné.',
+      teaser:'Žena v saních má v rukou něco sladkého. Edmund nemůže odolat — a to je jeho první chyba.',
+      quiz:[['Čím Královna Edmunda láká?',['Tureckým medem','Zlatem','Koněm'],0],['Co mu slíbí?',['Že z něj udělá prince','Že mu dá hrad','Že ho odvede domů'],0]]},
+    {gi:5,title:'Zpátky na této straně dveří',en:'Back on This Side of the Door',fear:1,
+      sum:'Lucie nadšeně říká ostatním, že potkala v Narnii Edmunda — ale Edmund to přede všemi hanebně popře a tvrdí, že si Lucie vymýšlí. Zbylí sourozenci se začnou o Lucii obávat a obrátí se na profesora Kirkea. Ten se k jejich překvapení zachová rozumně — a Petra se Zuzanou si pěkně zpracuje otázkami.',
+      focus:['Edmundův zlý skutek vůči sestře','Proč profesor Kirke bere Lucii vážně','Logika versus víra'],
+      q:['Proč je těžké věřit něčemu, co jsme sami nezažili?','Jak byste se zachovali, kdybyste byli Edmund — přiznali byste pravdu?'],
+      words:[['logika','správné uvažování, které nás vede k pravdě'],['důkaz','věc, která dokazuje, že něco je pravda']],
+      teaser:'Edmund ví, že Lucie nelže — ale to nikomu nepřizná. Jak se to celé vyvine?',
+      quiz:[['Co Edmund tvrdí o Narnii?',['Že si ji Lucie vymyslela','Že tam byl taky','Že tam nikdy nebyl nikdo'],0],['Kdo se zachová k Lucii nejvíc rozumně?',['Profesor Kirke','Paní Macreadyová','Petr'],0]]},
+    {gi:6,title:'Do lesa',en:'Into the Forest',fear:1,
+      sum:'Při hře na schovávanou před paní Macreadyovou se všichni čtyři schovají do pokoje se skříní — a konečně se dostanou do Narnie společně. Lucie je dovede k lampě a k jeskyni pana Tumnuse, ale ta je rozbitá a zpustlá. Na stěně je nařízení Královny, která faun zatkla za to, že zachraňoval lidi.',
+      focus:['Čtyři děti poprvé společně v Narnii','Co se stalo s Tumnusovou jeskyní','Proč je faun zatčen'],
+      q:['Co ti napovídá poškozená jeskyně o tom, jak Královna vládne?','Jak bys na místě sourozenců reagoval na to, že Lucie mluvila pravdu?'],
+      words:[['zatčení','když někoho zadrží a odvedou, protože porušil pravidla'],['hluboká zima','dlouhé období chladu, které nikdy nekončí']],
+      teaser:'Čtveřice poprvé vstoupí do Narnie společně — a první, co najdou, je rozbitá jeskyně a vzkaz, který všechno změní.',
+      quiz:[['Kam se děti poprvé dostanou společně?',['Do Narnie','Na půdu','Do zahrady'],0],['Co zjistí o Tumnusovi?',['Že byl zatčen','Že je na dovolené','Že se odstěhoval'],0]]},
+    {gi:7,title:'Den u Bobrů',en:'A Day with the Beavers',fear:2,
+      sum:'V lese k dětem promluví malý červenohnědý bobr, který je zavede do své hráze u zamrzlé řeky. Paní Bobrová jim naservíruje oběd a pan Bobr jim šeptem prozradí, že v Narnii se brzy něco změní — protože se vrací Aslan. Při jeho jménu každý z dětí pocítí zvláštní, těžko pojmenovatelný pocit.',
+      focus:['Seznámení s Bobry a jejich hrází','Kdo je Aslan a proč je jeho jméno tak významné','Zvláštní pocit, který jméno Aslan v dětech probouzí'],
+      q:['Proč se jméno Aslan každému z dětí zdá jiné — a přesto zvláštní?','Jak se ti líbí, že se bobři nebojí mluvit o tom, čeho se ostatní bojí?'],
+      words:[['hráz','stavba, kterou bobři vytvářejí z klacků a bahna'],['proroctví','předpověď toho, co se stane v budoucnu']],
+      teaser:'V zasněženém lese promluví na děti malé zvíře — a to, co jim poví, změní celou jejich cestu.',
+      quiz:[['Kdo děti zavede do hráze?',['Pan Bobr','Pan Tumnus','Otec Vánoc'],0],['Čí jméno děti okouzlí?',['Aslanovo','Čarodějničino','Kirkeovo'],0]]},
+    {gi:8,title:'Co se stalo po večeři',en:'What Happened After Dinner',fear:3,
+      sum:'Po jídle zjistí Lucie, že Edmund beze slova zmizel — a Bobři si uvědomí, že se vydal za čarodějnicí. Rychle se vydají na cestu, aby se dostali k Aslanovi dřív, než je Královna najde. Mezitím Edmund dorazí k jejímu zámku a zjistí, že všechno, co mu slíbila, byla lež.',
+      focus:['Edmundova zrada a její první důsledky','Rychlý útěk před blížící se čarodějnicí','Čarodějnicin skutečný záměr'],
+      q:['Proč si myslíš, že Edmund odešel tajně?','Jak by ses cítil, kdybys zjistil, že ti někdo celou dobu lhal?'],
+      words:[['zrada','když někdo cizí pomáhá nepříteli'],['útěk','rychlé opuštění místa, aby unikl nebezpečí']],
+      fearnote:'⚠️ Napínavé — děti utíkají před nebezpečím a Edmund zjišťuje, že byl oklamán. Žádné násilí, ale emoce jsou silné.',
+      teaser:'Po večeři se někdo vytratí z hráze — a to, co se stane dál, změní všechno.',
+      quiz:[['Co udělá Edmund po večeři?',['Tajně odejde za čarodějnicí','Zůstane s ostatními','Vrátí se domů'],0],['Kam se ostatní vydají?',['K Aslanovi','Domů do skříně','Do čarodějnicina zámku'],0]]},
+    {gi:9,title:'V čarodějnicině domě',en:"In the Witch's House",fear:3,
+      sum:'Edmund dorazí do temného zámku, který je plný kamenných soch zkamenělých tvorů. Čarodějnice se na něj nepřívětivě obořuje a místo slíbeného medu mu dá jen suchý chléb a vodu. Poté se s ním vydá s družinou po stopě ostatních dětí — jenže u hráze najdou jen prázdné domovy.',
+      focus:['Čarodějnicin zámek a sochy zkamenělých','Jak se čarodějnice po Edmundovi chová, když už ho nepotřebuje','Honička po stopě, která končí prázdnou hrází'],
+      q:['Co ti napovídají sochy o tom, co se stalo těm, kdo se čarodějnici postavili?','Jak změnil Edmundův pohled na čarodějnici to, co ho v jejím domě potkalo?'],
+      words:[['zámek','velká opevněná budova, kde bydlí šlechta'],['kámen','tvrdý materiál, ze kterého jsou sochy']],
+      fearnote:'⚠️ Napínavější kapitola — temný zámek, sochy zkamenělých tvorů a čarodějnice, která se projeví jako krutá. Bez drastických scén.',
+      teaser:'Slibovaný palác a sladkosti se rozplynou — Edmund brzy pochopí, do čeho se zapletl.',
+      quiz:[['Co Edmund v čarodějnicině zámku uvidí?',['Kamenné sochy','Zlatý poklad','Nic'],0],['Čím ho čarodějnice nakonec pohostí?',['Chlebem a vodou','Tureckým medem','Dortem'],0]]},
+    {gi:10,title:'Kouzlo slábne',en:'The Spell Begins to Break',fear:1,
+      sum:'Uprostřed zimní krajiny se děti dozvědí, že zimní kouzlo poprvé povolilo — protože do Narnie dorazil Otec Vánoc! Dá všem dárky: Petrovi meč a štít, Zuzaně luk a roh, Lucii kouzelný lektvar a dýku. A čarodějnice mezitím zjistí, že se sníh pod jejími saněmi začíná měnit na vodu.',
+      focus:['Příjezd Otce Vánoc po sto letech','Dárky, které dětem pomohou','Čarodějnicina zima ztrácí moc'],
+      q:['Proč myslíš, že dárky nejsou hračky, ale věci na obranu?','Co si myslíš, že ten roztávající sníh znamená?'],
+      words:[['kouzelný lektvar','nápoj, který vyléčí nemoci a zranění'],['roh','nástroj, který zavolá na pomoc']],
+      teaser:'Zimní kouzlo poprvé povolí — a z lesa se ozve zvonění rolniček. Kdo to jede?',
+      quiz:[['Kdo dětem dá dárky?',['Otec Vánoc','Aslan','Pan Bobr'],0],['Co se děje se sněhem?',['Taje','Houstne','Zamrzá'],0]]},
+    {gi:11,title:'Aslan se přibližuje',en:'Aslan Is Nearer',fear:2,
+      sum:'Čím víc se blíží k cíli, tím víc se kolem rozjasňuje jaro — sníh taje, na stromech se objevují pupeny a ptáci zpívají. Děti dojdou do Aslanova tábora na kopci a poprvé uvidí mohutného zlatého lva. Aslan je přijme laskavě, ale i s vážností, a přislíbí, že jim pomůže zachránit Edmunda.',
+      focus:['Jaro po dlouhé zimě','První setkání s Aslanem','Aslan slíbí zachránit Edmunda'],
+      q:['Jaký dojem by na tebe udělal Aslan, kdyby byl zároveň laskavý i silný?','Co myslíš, že znamená, že se příroda probouzí tam, kam Aslan přijde?'],
+      words:[['tábor','místo, kde vojáci a jejich přátelé přebývají ve stanech'],['jaro','roční období, kdy všechno raší']],
+      teaser:'Zima se láme a země voní po jaru. Co (nebo kdo) za tím stojí?',
+      quiz:[['Koho děti v táboře uvidí?',['Aslana','Čarodějnici','Pana Tumnuse'],0],['Co se kolem děje?',['Přichází jaro','Přichází zima','Padá déšť'],0]]},
+    {gi:12,title:'Petrův první boj',en:"Peter's First Battle",fear:3,
+      sum:'Čarodějnicin vlčí velitel Maugrim přepadne Zuzanu — ale Petr se svým novým mečem vlka zabije a zachrání sestru. Aslanovi průzkumníci pak rozeženou čarodějnicinu družinu a osvobodí Edmunda, kterého čarodějnice držela v zajetí. Edmund je zničený a tichý.',
+      focus:['Petrův první střet s nepřítelem','Záchrana Edmunda','Proč je Edmund tak zničený'],
+      q:['Jaké to je, když se musíš poprvé postavit někomu zlému?','Proč si myslíš, že Aslan zachraňuje i toho, kdo ho zradil?'],
+      words:[['družina','skupina přátel, kteří jdou spolu'],['zajatec','člověk, kterého někdo drží v zajetí']],
+      fearnote:'⚠️ Napínavý a dost akční — vlk útočí a je zabit mečem. Násilí je stručné a bez krutých detailů.',
+      teaser:'Nad tábor se snese temný stín — a Petr musí poprvé ukázat, že je opravdu bojovník.',
+      quiz:[['Koho Petr zachrání?',['Zuzanu','Lucii','Edmunda'],0],['Kdo je vlčí velitel?',['Maugrim','Aslan','Oreius'],0]]},
+    {gi:13,title:'Hluboké kouzlo od úsvitu času',en:'Deep Magic from the Dawn of Time',fear:3,
+      sum:'Edmund si s Aslanem potichu promluví a pochopí, jak hluboce zklamal. Čarodějnice pak dorazí do tábora a dovolává se starého narnijského zákona: každý zrádce patří jí. Aslan se s ní odebere na samotu — a po návratu oznámí, že se čarodějnice vzdala nároku na Edmunda.',
+      focus:['Rozhovor Aslana s Edmundem','Čarodějnice požaduje, co jí podle zákona patří','Aslan a čarodějnice se dohodnou'],
+      q:['Proč myslíš, že existují pravidla, které nemůže porušit ani král?','Co myslíš, že Aslan čarodějnici nabídl?'],
+      words:[['zákon','pravidlo, které musí všichni dodržovat'],['zrádce','ten, kdo zradil své přátele']],
+      fearnote:'⚠️ Napětí je velké, ale hlavně emocionální — děti vytuší, že za záchranu muselo něco zaplatit.',
+      teaser:'Čarodějnice přichází s požadavkem, který vyděsí i dospělé — a Aslan musí učinit nejtěžší rozhodnutí.',
+      quiz:[['Co čarodějnice požaduje?',['Edmunda podle zákona','Aslanův trůn','Zlato'],0],['S kým Aslan mluví osamotě?',['S čarodějnicí','S Petrem','S bobry'],0]]},
+    {gi:14,title:'Čarodějnicino vítězství',en:'The Triumph of the Witch',fear:5,
+      sum:'V noci Aslan potichu opustí tábor a Zuzana s Lucií ho tajně následují. Aslan jim dovolí jít s ním kus cesty, pak je ale požádá, aby ho nechaly jít dál samotného. U Kamenného stolu ho čarodějnice a její družina zesměšní, svážou ho a on dobrovolně zemře. Dívky vše tiše vidí a pak plačí.',
+      focus:['Aslanova noční cesta','Zuzana a Lucie vedle něj','Co se stane u Kamenného stolu'],
+      q:['Proč myslíš, že se Aslan rozhodl jít sám a bez odporu?','Jaký pocit máš z toho, že dobro někdy musí obětovat sebe?'],
+      words:[['Kamenný stůl','starobylý kámen, na kterém se konají oběti'],['oběť','když se někdo vzdá něčeho pro druhé']],
+      fearnote:'⚠️⚠️ Nejemotivnější kapitola knihy — Aslan se obětuje. Není tam krev, ale vyprávění je smutné a těžké. Doporučujeme číst společně.',
+      teaser:'Tohle je nejsmutnější a nejtěžší kapitola celé knihy — a nikdo, kdo ji čte, ji nechce přeskočit.',
+      quiz:[['Kdo Aslana tajně následuje?',['Zuzana a Lucie','Petr a Edmund','Bobři'],0],['Co se u Kamenného stolu stane?',['Aslan se nechá obětovat','Aslan vyhraje','Nic'],0]]},
+    {gi:15,title:'Ještě hlubší kouzlo',en:'Deeper Magic from Before the Dawn of Time',fear:2,
+      sum:'Dívky u Aslanova těla bdí celou noc. Pak se z kamenných trosek vynoří myši, které ukousají provazy. A pak se země zachvěje: Kamenný stůl se rozlomí a Aslan znovu žije. Vysvětlí jim, že existuje ještě hlubší kouzlo, než o jakém čarodějnice věděla — a letí s nimi na zádech k čarodějnicinu zámku.',
+      focus:['Tichá bdělost při Aslanově těle','Myši, které ukousají provazy','Aslan ožívá a vysvětluje, proč'],
+      q:['Proč myslíš, že obětovat se za druhého může změnit pravidla?','Co ti na myších přišlo zvláštní nebo krásné?'],
+      words:[['kouzlo','magická síla, která mění svět'],['myš','malé zvířátko s dlouhým ocasem']],
+      fearnote:'Po těžké předchozí kapitole je tahle uklidňující a plná radosti — dobrý konec nepřijde pozdě.',
+      teaser:'Po temné noci přichází úsvit. A s ním věc, kterou nikdo nečekal.',
+      quiz:[['Kdo ukousal provazy?',['Myši','Bobři','Vlci'],0],['Co se stane s Aslanem?',['Ožije','Zmizí','Zestárne'],0]]},
+    {gi:16,title:'Co se stalo se sochami',en:'What Happened About the Statues',fear:3,
+      sum:'Aslan se s Lucií a Zuzanou přihnal do čarodějnicina zámku, kde dýchá na zkamenělé tvory — a jeden po druhém ožívají. Mezitím Petr vede Aslanovo vojsko do bitvy, kde se utká s čarodějnicinou armádou. Příchod Aslana a nově oživených zvrátí boj; čarodějnice padne a její vláda skončí.',
+      focus:['Aslan osvobozuje zakleté tvory','Rozhodující bitva Narnie','Pád Bílé čarodějnice'],
+      q:['Jak se ti líbí, že Aslan dává životu druhou šanci i těm, co byli dlouho „zkamenělí"?','Co myslíš, že přinese konec čarodějnicina vládnutí?'],
+      words:[['socha','umělecké dílo z kamene či jiného materiálu'],['armáda','velká skupina bojovníků']],
+      fearnote:'⚠️ Napínavá bitva s hrozícími ztrátami — ale poměrně stručná a bez drastických popisů. Radost převažuje.',
+      teaser:'Zámek je plný soch — a Aslan přijde, aby každé z nich vrátil život.',
+      quiz:[['Co Aslan s sochami udělá?',['Oživí je','Rozbije je','Odnese je'],0],['Kdo v bitvě padne?',['Bílá čarodějnice','Aslan','Petr'],0]]},
+    {gi:17,title:'Hon na bílého jelena',en:'The Hunting of the White Stag',fear:1,
+      sum:'Po bitvě jsou všichni čtyři sourozenci korunováni na krále a královny Narnie na zámku Cair Paravel. Vládnou mnoho let — z dětí vyrostou dospělí. Jednoho dne se při honu na bílého jelena ocitnou u staré lampy, a když zavadí o větve, zjistí, že vylézají zpátky ze skříně — a že všechno se vrátilo na začátek.',
+      focus:['Korunovace na zámku Cair Paravel','Roky vlády v Narnii','Návrat skříní zpátky domů'],
+      q:['Jak by ses cítil, kdybys několik let žil jiným životem, a pak se najednou vrátil jako dítě?','Co myslíš, že si z Narnie odnesli?'],
+      words:[['trůn','královská židle'],['korunovace','slavnostní obřad, při kterém se někdo stane králem']],
+      teaser:'Příběh končí radostně — ale ještě zbývá poslední, nejzáhadnější lov.',
+      quiz:[['Co se stane se čtyřmi sourozenci v Narnii?',['Stanou se králi a královnami','Vrátí se hned domů','Zůstanou dětmi'],0],['Co je při honu čeká?',['Cesta zpět skříní','Nový nepřítel','Nový zámek'],0]]}
+  ];
+  var GIMETA={}; CH.forEach(function(c){ GIMETA[c.gi]={lab:'Kap. '+c.gi,title:c.title}; });
+
+  // ===== Dětský převyprávěný recap "Co se v kapitole stalo" =====
+  var KIDSUM={
+    1:['Za války bylo v Londýně nebezpečno, a tak čtyři sourozenci — Petr, Zuzana, Edmund a Lucie — odjeli na venkov k starému profesorovi do obrovského domu. Dům měl spoustu chodeb, pokojů a schodišť. Paní Macreadyová, přísná hospodyně, jim hned vysvětlila, že se v domě nesmí hlučet ani sahat na žádné věci.',
+       'Jednoho deštivého dne si děti zahrály na schovávanou. Lucie našla prázdný pokoj, ve kterém stála jediná věc — velká stará skříň. Vlezla dovnitř, mezi kožichy, a šla dál a dál dozadu, až ucítila pod nohama sníh. Najednou stála uprostřed zasněženého lesa.'],
+    2:['V zimním lese Lucie spatřila lampu a pod ní podivného tvora: horní polovinu měl jako člověk a spodní jako kozu, s kopýtky, rohy a červeným šátkem kolem krku. Nesl balíčky a deštník. Byl to faun jménem pan Tumnus a pozval Lucii na čaj do své útulné jeskyně. Hrál jí na flétnu a vyprávěl o Narnii, kde je zima už sto let a Vánoce nikdy nepřijdou.',
+       'Najednou se pan Tumnus rozplakal a řekl Lucii, že je špatný faun. Uklidnil se, odvedl ji zpátky k lampě a ukázal jí cestu domů. Když Lucie vylezla ze skříně, ostatní se divili — ona byla pryč jen pár vteřin, i když se jí zdálo, že tam byla celé hodiny.'],
+    3:['Lucie všem vyprávěla o Narnii, ale nikdo jí nevěřil. Petr a Zuzana si mysleli, že si vymýšlí, a Edmund se jí navíc posmíval. Jenže jednoho dne se Edmund při hře na schovávanou schoval do skříně — a když šel hlouběji, ocitl se taky ve sněhu.',
+       'Vydal se po cestě lesem a najednou k němu přijely saně tažené sobem a v nich seděla vysoká, bledá žena v bílé kožešině. Byla krásná, ale zároveň chladná. Edmund netušil, co ho čeká.'],
+    4:['Žena se představila jako Královna Narnie. Nechala Edmunda sednout k sobě do saní, přikryla ho kožešinou a nabídla mu horký nápoj. Pak mu dala něco, co nikdy předtím neochutnal — kouzelný turecký med. Čím víc ho jedl, tím víc po něm toužil.',
+       'Královna slíbila Edmundovi, že mu dá celý bonbon a udělá z něj prince, pokud přivede své sourozence k jejímu zámku. Edmund se potkal s Lucií a vrátili se spolu zpátky skříní do domu. Edmund věděl, že Narnie existuje — ale bylo mu to jedno, protože chtěl jen ten turecký med.'],
+    5:['Lucie se Edmunda zeptala, jestli už viděl Narnii. Edmund přede všemi řekl, že Lucie si všechno vymýšlí a že byli jenom ve skříni. Lucie se rozplakala. Petr a Zuzana se o ni začali bát — mysleli si, že se jí něco stalo s hlavou — a tak šli za profesorem Kirkem.',
+       'Profesor je překvapil. Vůbec je nepodezíral z hloupostí, ale ptal se jich: „Proč tomu nevěříte? Pokud Lucie říká pravdu, co když ta pravda existuje?“ Děti se zamyslely, ale stejně tomu nevěřily. Edmund věděl, že Lucie mluvila pravdu — a trápilo ho to.'],
+    6:['Jednoho dne děti utekly před paní Macreadyovou, která provázela návštěvníky po domě, a schovaly se do pokoje se skříní. Všichni čtyři vlezli dovnitř, a tentokrát se do Narnie dostali společně. Lucie je odvedla k lampě a k jeskyni pana Tumnuse.',
+       'Jeskyně byla ale rozbitá a opuštěná. Na zemi ležel papír: faun byl zatčen Královnou za to, že zachraňoval lidské děti. Najednou se ozvalo šustění a z keře vykoukl malý hnědý bobr. Kývnutím naznačil dětem, ať jdou za ním.'],
+    7:['Bobr zavedl děti do své hráze u zamrzlé řeky. Paní Bobrová jim přichystala výborný oběd, a pan Bobr šeptem prozradil to, co už Narnie dlouho čekala: že se do země vrací Aslan, velký lev, pravý král Narnie. Při jeho jménu se každému z dětí rozbušilo srdce, i když nevěděli proč.',
+       'Pan Bobr řekl, že se mají vydat k Aslanovi hned, aby byli v bezpečí před Královnou. Všichni se zvedli — až na Edmunda, kterého nikdo nevšiml, že tiše zmizel.'],
+    8:['Po jídle se Lucie rozhlédla a zjistila, že tu Edmund není. Pan Bobr rychle pochopil: Edmund se vydal za čarodějnicí. Všichni museli rychle vyrazit, než je Královna najde. Vzali s sebou jídlo a vydali se k Aslanovi.',
+       'Edmund mezitím došel k čarodějnicinu zámku. Doufal, že tam najde slíbený palác a turecký med — jenže našel jen ohromný, temný sál plný kamenných soch. Pochopil, že Královna není laskavá, ale krutá a že mu celou dobu lhala.'],
+    9:['V zámku čarodějnice nebyla ani zdaleka tak přívětivá jako dřív. Místo medu dostal Edmund suchý chléb a vodu. Čarodějnice se vydala se svou družinou za ostatními dětmi a vzala Edmunda s sebou, svázaného na saních.',
+       'Došli k hrázi Bobrů, ale tam už nikdo nebyl. Čarodějnice zuřila a nechala vlka Maugrima ostatní hledat. Edmund se zatím začínal bát, co se s ním bude dít.'],
+    10:['Na ostatní děti se mezitím usmálo štěstí: zničehonic se kolem začal tát sníh a zvonění rolniček oznámilo něco neuvěřitelného — přijel Otec Vánoc! Vánoce v Narnii nebyly už sto let. Každému dal dárek: Petrovi meč a štít, Zuzaně luk, šípy a roh, Lucii lektvar, který vyléčí každou ránu, a dýku na ochranu.',
+        'Čarodějnice mezitím zjistila, že se pod jejími saněmi sníh mění na vodu, a poznala, že její moc slábne. Rozzlobená se rozhodla, že se musí Aslana zbavit co nejdřív.'],
+    11:['Jaro se probouzelo. Sníh zmizel, listí se zazelenalo a ptáci zpívali. Děti dorazily do Aslanova tábora, kde stáli kentauři, jednorožci a spousta dalších tvorů. A uprostřed nich stál on: obrovský lev se zlatou hřívou, kterého děti nemohly přestat obdivovat.',
+        'Aslan děti přivítal laskavým hlasem a slíbil jim, že pomůže zachránit Edmunda. Zároveň ale varoval, že to nebude lehké a že Narnie bude potřebovat jejich odvahu.'],
+    12:['Najednou se v táboře objevil velký šedý vlk Maugrim a napadl Zuzanu. Petr rychle vytasil meč, který dostal od Otce Vánoc, a vlka zabil. Byl to jeho první boj. Zatím se Aslanovi lidé vydali po stopě čarodějnice a Edmunda zachránili.',
+        'Edmund byl tichý a zničený. Věděl, co udělal, a styděl se. Aslan ho vzal stranou na rozhovor a Edmund pak vrátil se svým sourozencům jiný, než odešel.'],
+    13:['Aslan s Edmundem dlouho mluvil, a ať byl jejich rozhovor jakýkoliv, Edmund se po něm změnil. Čarodějnice do tábora dorazila a řekla, že podle starého zákona Narnie patří každý zrádce jí. Aslan s ní odešel stranou a po chvíli oznámil všem: čarodějnice se vzdala nároku na Edmunda.',
+        'Všichni pochopili, že se musel stát nějaký slib či dohoda, ale Aslan jim nic nevysvětlil. Večer byl tichý a zamyšlený.'],
+    14:['Té noci Aslan nespal. Zuzana s Lucií, které také nemohly spát, ho tajně následovaly. Aslan vypadal smutně a pomalu šel do lesa. Dovolil dívkám jít kus cesty s sebou, pak je ale požádal, aby ho nechaly jít dál samotného.',
+       'Dívky se ukryly a sledovaly, jak Aslana u Kamenného stolu zmocnily čarodějnice a její tvorové. Zesměšnili ho, ostříhali mu hřívu a svázali ho. Pak čarodějnice vzala nůž — a Aslan zemřel. Zuzana a Lucie plakaly celou noc.'],
+    15:['Dívky zůstaly u Aslanova těla bez hnutí. Když svítalo, z trávy se vynořila hejna malých myšek a ukousala všechny provazy. Pak se země zatřásla a Kamenný stůl se s hlasitým zvukem rozlomil.',
+        'Za nimi stál Aslan, živý a zářivý. Vysvětlil jim, že existuje ještě hlubší kouzlo, než o jakém věděla čarodějnice: pokud se někdo dobrovolně obětuje za někoho jiného, Kamenný stůl se rozlomí a smrt se obrátí zpět. Nechal je vylézt mu na záda a běželi k čarodějnicinu zámku.'],
+    16:['V zámku našel Aslan kamenné nádvoří plné soch. Dýchl na ně a postupně se vzbudily k životu: lvi, kentauři, jednorožci a dokonce i obr jménem Rumblebuffin. Všichni se vydali do bitvy, kde už Petr bojoval s čarodějnicinou armádou.',
+        'Aslan s oživenými tvory změnil průběh boje. Čarodějnice padla a její vláda se skončila. Lucie svým lektvarem vyléčila zraněné, včetně Edmunda, který bojoval statečně.'],
+    17:['Po bitvě byli čtyři sourozenci korunováni na krále a královny Narnie na zámku Cair Paravel. Vládli moudře a spravedlivě mnoho let. Z dětí vyrostli dospělí a Narnie vzkvétala.',
+        'Jednoho dne se vydali na lov bílého jelena, který splňuje přání. Cestou zavadili o větve u staré lampy — a najednou se vynořili zpátky ze skříně v domě profesora. Byli zase děti a čas se skoro nepohnul. Profesor jim naznačil, že on sám ví víc, než říká.']
+  };
+
+  // ===== KIDINTRO: "Co bylo minule" + "Co nás čeká" =====
+  var KIDINTRO={
+    1:['Náš příběh se odehrává za velké války, kdy je Londýn nebezpečný a děti posílají na venkov.',
+       'Čtyři sourozenci se ocitnou v obrovském domě plném chodeb a pokojů. Co v něm objeví — a co je skryto v jednom z jeho pokojů?'],
+    2:['Minule Lucie při hře na schovávanou vlezla do staré skříně — a ocitla se v zasněženém lese.',
+       'Teď se v tom lese seznámí s někým velmi zvláštním. Kdo to je — a co jí poví o zemi, do které se dostala?'],
+    3:['Minule Lucie poznala fauna pana Tumnuse a vrátila se domů. Nikdo jí ale nevěřil.',
+       'Teď vleze do skříně další z dětí. Kdo to bude — a koho ve sněhu potká?'],
+    4:['Minule se Edmund ocitl v Narnii a k němu zničehonic zastavily saně tažené sobem.',
+       'Teď se dozví, kdo je tajemná žena — a co mu nabídne. Dokáže Edmund odolat?'],
+    5:['Minule se Edmund s Lucií vrátili domů — a každý ví něco, co ten druhý neví.',
+       'Teď se musí rozhodnout, kdo komu uvěří. Jak se Edmund zachová k sestře — a co na to řekne profesor?'],
+    6:['Minule se děti nechaly přesvědčit, že v Lucii nejspíš něco je. Profesor Kirke jim navíc dal moudrou radu.',
+       'Teď se všichni čtyři vydají skříní do jiného světa. Co tam najdou — a kdo jim ukáže cestu?'],
+    7:['Minule dorazila čtveřice do Narnie společně a objevila rozbitou jeskyni fauna.',
+       'Teď je v zasněženém lese osloví zvíře, které mluví. Co jim prozradí o Narnii — a kdo je Aslan?'],
+    8:['Minule děti poprvé uslyšely jméno Aslan a začaly přemýšlet, jaký asi bude.',
+       'Teď se jeden z nich beze slova vytratí. Co se stane, když zrovna ten, kdo se stal terčem čarodějnice, odejde sám?'],
+    9:['Minule se děti dozvěděly, že jeden z nich zmizel — a že to může být velký problém.',
+       'Teď se podíváme do temného zámku, kde zatím čeká ten, kdo se vydal špatnou cestou. Co ho tam čeká?'],
+    10:['Minule se čarodějnice vydala po stopě dětí a Edmund byl s ní. Ostatní děti mezitím utíkaly.',
+        'Teď se v Narnii stane něco, co se nestalo už sto let — a čarodějnice se dozví, že její moc slábne.'],
+    11:['Minule se děti dozvěděly, že čarodějnice už nemá takovou moc jako dřív. Zima ustupuje.',
+        'Teď poprvé uvidí toho, o kom všichni mluví — Aslana. Jaký doopravdy je?'],
+    12:['Minule se děti poprvé setkaly s Aslanem a on slíbil, že pomůže zachránit Edmunda.',
+        'Teď je čeká první skutečný boj. Jak si Petr, nejstarší z dětí, v souboji povede?'],
+    13:['Minule Petr zachránil Zuzanu před vlkem a Edmund byl osvobozen z moci čarodějnice.',
+        'Teď je v táboře ticho před bouří. Čarodějnice se dovolává starého zákona — a Aslan musí rozhodnout, co s tím.'],
+    14:['Minule se Aslan s čarodějnicí dohodl na něčem, o čem zatím nikdo neví.',
+        'Tahle kapitola je nejsmutnější a nejtěžší z celé knihy — možná si ji budete chtít přečíst spolu, pomalu a s pauzami. Co se stane s Aslanem?'],
+    15:['Minule se Zuzana a Lucie rozloučily s Aslanem — a zůstaly samy u Kamenného stolu.',
+        'Teď se z temné noci stane nový úsvit. Co se u Kamenného stolu přihodí — a kdo za tím stojí?'],
+    16:['Minule Aslan znovu ožil a vzal Zuzanu a Lucii s sebou k čarodějnicinu zámku.',
+        'Teď se rozhodne o osudu Narnie. Jaká bitva čeká — a co se stane s kamennými sochami v zámku?'],
+    17:['Minule bylo po bitvě a čarodějnice byla poražena. Narnie se mohla znovu nadechnout.',
+        'Tohle je poslední kapitola celé knihy. Co se stane se čtyřmi dětmi — a vrátí se někdy do našeho světa?']
+  };
+
+  function blk(ic,title,inner){ return '<div class="block"><h4>'+icon(ic)+esc(title)+'</h4>'+inner+'</div>'; }
+
+  function chapterBody(c, full, peek){
+    if(state.mode==='rodic'){
+      var h=illusFigure(c.gi)+blk('star','Shrnutí','<p>'+esc(c.sum)+'</p>');
+      h+=blk('star','Na co se zaměřit','<ul class="bullets">'+c.focus.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>');
+      if(c.q)h+=blk('star','Otázky pro děti','<ul class="bullets q-list">'+c.q.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>');
+      if(c.words)h+=blk('star','Slovíčka','<div class="words">'+c.words.map(function(w){return '<span class="word"><b>'+esc(w[0])+'</b> — <span>'+esc(w[1])+'</span></span>';}).join('')+'</div>');
+      var fearlab = c.fear<=1?'v pohodě.':(c.fear<=3?'napínavé, nic hrozného.':'silnější scéna, připrav se.');
+      h+='<div class="block"><div class="fearnote">'+(c.fearnote?esc(c.fearnote):'Strašidelnost '+c.fear+'/5 — '+esc(fearlab))+'</div></div>';
+      if(c.quiz){ h+=quizHtml(c); }
+      return h;
+    }
+    // DĚTI
+    if(!peek){ return '<p class="locknote">'+icon('lock')+'Tuhle kapitolu jsme ještě nečetli. Nejdřív si ji přečteme s rodičem!</p>'; }
+    if(!full){
+      var intro=KIDINTRO[c.gi];
+      var kb='<div class="kidbox">';
+      if(intro){
+        kb+=blk('scroll',(c.gi===1?'Než začneme číst':'Co bylo minule'),'<p class="kidrecap">'+esc(intro[0])+'</p>')+
+            blk('star','Co nás čeká','<p class="kidrecap">'+esc(intro[1])+'</p>');
+      } else { kb+='<p class="teaser">'+esc(c.teaser)+'</p>'; }
+      kb+='</div>';
+      return kb+'<p class="locknote">'+icon('lock')+'Až kapitolu přečteme, klikni na <b>Přečteno</b> a odemkne se shrnutí, kvíz i nové postavy.</p>';
+    }
+    var k=illusFigure(c.gi);
+    var ks=KIDSUM[c.gi];
+    if(ks) k+=blk('scroll','Co se v kapitole stalo',ks.map(function(pp){return '<p class="kidrecap">'+esc(pp)+'</p>';}).join(''));
+    if(c.quiz){ k+=quizHtml(c); }
+    else{ k+='<p class="locknote">'+icon('check')+'Přečteno! Skvělá práce, kouzelníku.</p>'; }
+    return k;
+  }
+
+  function quizHtml(c){
+    var h='<div class="quiz"><h4 class="block">'+icon('star')+' Kvíz — pamatuješ si?</h4>';
+    c.quiz.forEach(function(q,qi){
+      h+='<div class="qq" data-q="'+qi+'"><div class="qtext">'+esc(q[0])+'</div><div class="opts">';
+      q[1].forEach(function(opt,oi){ h+='<button class="opt" data-c="'+c.gi+'" data-qi="'+qi+'" data-oi="'+oi+'" data-ok="'+(oi===q[2]?1:0)+'">'+esc(opt)+'</button>'; });
+      h+='</div></div>';
+    });
+    return h+'</div>';
+  }
+
+  document.addEventListener('click',function(ev){
+    var o=ev.target.closest('.opt'); if(!o||o.disabled)return;
+    var wrap=o.closest('.qq'); var btns=wrap.querySelectorAll('.opt');
+    btns.forEach(function(b){b.disabled=true; if(b.getAttribute('data-ok')==='1')b.classList.add('correct');});
+    if(o.getAttribute('data-ok')!=='1'){ o.classList.add('wrong'); return; }
+    var key=o.getAttribute('data-c')+'_'+o.getAttribute('data-qi');
+    if(!state.quiz[key]){ state.quiz[key]=true; save(); updateProgress(); }
+  });
+
+  // ===== render: postavy =====
+  function renderChars(){
+    var rg=reachedGi();
+    $('#charHint').textContent = state.mode==='deti' ? 'Postavy se odemykají, jakmile je v příběhu potkáte. Klikni a dozvíš se víc!' : 'Přehled postav (v režimu Rodiče vidíš všechny). Klikni pro detail.';
+    var grid=$('#charGrid'); grid.innerHTML='';
+    CHARS.forEach(function(ch){
+      var unlocked = ch.gi<=rg || state.mode==='rodic';
+      var card=el('div','char r-'+ch.race+(unlocked?'':' locked'));
+      var frame;
+      if(!unlocked){ frame='<div class="pframe fallback">'+icon('lock')+'</div>'; }
+      else { var im=imgPortrait(ch.id,ch.name);
+        frame = im ? '<div class="pframe">'+im+'</div>'
+                   : '<div class="pframe fallback">'+icon(ch.ic)+'</div>'; }
+      card.innerHTML=frame+
+        '<h4>'+(unlocked?esc(ch.name):'? ? ?')+'</h4><div class="race">'+esc(ch.rlab)+'</div>';
+      if(unlocked){ card.setAttribute('tabindex','0'); card.setAttribute('role','button');
+        card.addEventListener('click',function(){ toggleChar(ch, card); });
+        card.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggleChar(ch, card); } }); }
+      grid.appendChild(card);
+    });
+  }
+  function arcHtml(ch){
+    var a=ARC[ch.id]; if(!a) return '';
+    var maxG = state.mode==='rodic' ? 99 : reachedGi();
+    var beats=a.beats.filter(function(b){return b[0]<=maxG;});
+    var h='';
+    if(beats.length){
+      h+='<div class="arc"><h4>'+icon('scroll')+'Příběh zatím</h4><ul class="timeline arc-tl">'+
+        beats.map(function(b){var m=GIMETA[b[0]]||{lab:'',title:''}; return '<li><span class="tage">'+esc(m.lab+' · '+m.title)+'</span>'+esc(b[1])+'</li>';}).join('')+'</ul></div>';
+    } else {
+      h+='<p class="locknote">'+icon('lock')+'Tuhle postavu ještě moc neznáme — čtěte dál a její příběh se tu bude připisovat.</p>';
+    }
+    if(a.ahead) h+='<div class="ahead">'+icon('star')+'<span><b>K popovídání s dětmi:</b> '+esc(a.ahead)+'</span></div>';
+    return h;
+  }
+  var openCharId=null;
+  function toggleChar(ch, card){
+    var ex=$('#charDetail'); if(ex){ex.remove();}
+    if(openCharId===ch.id){ openCharId=null; return; }
+    openCharId=ch.id;
+    var d=el('div','char-detail'); d.id='charDetail';
+    var txt = state.mode==='deti' ? ch.kid : ch.dad;
+    var im=imgPortrait(ch.id,ch.name);
+    var visual = im ? '<div class="cd-pimg">'+im+'</div>'
+                    : '<div class="medallion">'+icon(ch.ic)+'</div>';
+    d.innerHTML='<div class="cd r-'+ch.race+'">'+visual+
+      '<div class="cdbody"><h3>'+esc(ch.name)+'</h3><div class="en">'+esc(ch.en)+' · '+esc(ch.rlab)+'</div>'+
+      (ch.say?'<div class="say">Vyslov: <b>'+esc(ch.say)+'</b></div>':'')+
+      '<p>'+esc(txt)+'</p>'+arcHtml(ch)+'</div>'+
+      '<button class="close" aria-label="Zavřít">✕</button></div>';
+    card.after(d);
+    $('.close',d).addEventListener('click',function(e){e.stopPropagation(); d.remove(); openCharId=null;});
+    d.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+
+  // ===== render: progress =====
+  function updateProgress(){
+    var rc=readCount();
+    $('#chDone').textContent=rc;
+    $('#roadFill').style.width=(rc/17*100)+'%';
+    var pts=Object.keys(state.quiz).length*10;
+    $('#miles').textContent=pts;
+  }
+
+  // ===== render: audio =====
+  function renderAudio(){
+    var box=$('#audioList'); if(!box) return; box.innerHTML='';
+    var rg=reachedGi();
+    CH.forEach(function(c){
+      var peek = state.mode==='rodic' || c.gi<=rg+1;
+      var card=el('div','ch open');
+      card.setAttribute('data-gi',c.gi);
+      card.innerHTML='<div class="ch-head"><span class="ch-num'+(AUDIO[c.gi]?' has-audio':'')+'">'+c.gi+'</span>'+
+        '<div class="ch-t"><h3>'+(peek?esc(c.title):'? ? ?')+(AUDIO[c.gi]?' <span class="audio-dur">'+esc(AUDIO[c.gi].dur)+'</span>':'')+'</h3>'+(peek?'<span class="en">'+esc(c.en)+'</span>':'')+'</div></div>'+
+        '<div class="ch-body">'+
+          (!peek ? '<p class="locknote">'+icon('lock')+'Tuhle kapitolu jsme ještě nečetli.</p>'
+            : AUDIO[c.gi] ? '<audio controls preload="none" src="'+esc(AUDIO[c.gi].file)+'"></audio>'
+            : '<p class="locknote">'+icon('scroll')+'Nahrávka téhle kapitoly zatím není k dispozici.</p>')+
+        '</div>';
+      box.appendChild(card);
+    });
+  }
+
+  // ===== render: kapitoly =====
+  function flames(n){var h='<span class="lab">Strašidelnost</span>'; for(var i=0;i<5;i++){h+=icon('flame','flame'+(i<n?'':' off'));} return h;}
+  function renderChapters(){
+    var box=$('#chapters'); box.innerHTML='';
+    var rg=reachedGi();
+    CH.forEach(function(c){
+      var done=!!state.read[c.gi];
+      var peek = state.mode==='rodic' || c.gi<=rg+1;
+      var full = state.mode==='rodic' || done;
+      var card=el('div','ch'+(peek?'':' locked'));
+      card.setAttribute('data-gi',c.gi);
+      var head=el('div','ch-head');
+      head.innerHTML='<span class="ch-num">'+c.gi+'</span>'+
+        '<div class="ch-t"><h3>'+esc(c.title)+(AUDIO[c.gi]?' <button type="button" class="audio-badge" data-gi="'+c.gi+'" title="Poslechnout namluvenou kapitolu">'+icon('headphones')+'</button>':'')+'</h3><span class="en">'+esc(c.en)+'</span>'+
+        '<div class="fear">'+flames(c.fear)+'</div></div>';
+      var audioBtn=head.querySelector('.audio-badge');
+      if(audioBtn){ audioBtn.addEventListener('click',function(ev){
+        ev.stopPropagation();
+        goToTab('audio');
+        var target=$('#audioList .ch[data-gi="'+c.gi+'"]');
+        if(target) target.scrollIntoView({behavior:'smooth',block:'center'});
+      }); }
+      var right=el('div',null,'');
+      if(peek){
+        var rd=el('button','ch-read'+(done?' done':''), (done?icon('check')+'Přečteno':'Přečteno?'));
+        rd.addEventListener('click',function(ev){ev.stopPropagation(); state.read[c.gi]=!state.read[c.gi]; save(); rerender();});
+        right.appendChild(rd);
+      }
+      var car=el('span','caret','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>');
+      head.appendChild(right); head.appendChild(car);
+      card.appendChild(head);
+      var body=el('div','ch-body');
+      body.innerHTML = chapterBody(c, full, peek);
+      card.appendChild(body);
+      if(peek){ head.addEventListener('click',function(){ card.classList.toggle('open'); }); }
+      box.appendChild(card);
+    });
+  }
+
+  // ===== render: Svět =====
+  function renderWorld(){
+    var isDad=state.mode==='rodic', rg=reachedGi();
+    var lore = isDad ? LORE : LORE.filter(function(l){return (l.min||0)<=rg;});
+    var h='<div class="lore-grid">';
+    lore.forEach(function(l){
+      h+='<div class="lore"><div class="lore-head"><span class="lore-ic">'+icon(l.ic)+'</span><h3>'+esc(l.title)+'</h3></div><p>'+esc(l.text)+'</p></div>';
+    });
+    h+='<div class="lore wide"><div class="lore-head"><span class="lore-ic">'+icon('globe')+'</span><h3>Národy kouzelnického světa</h3></div><div class="race-list">'+
+      RACES.map(function(r){return '<div class="race-row r-'+r[0]+'"><div class="medallion">'+icon(r[0])+'</div><div><b>'+esc(r[1])+'</b> — <span>'+esc(r[2])+'</span></div></div>';}).join('')+'</div></div>';
+    if(isDad || rg>=2){
+      h+='<div class="lore wide"><div class="lore-head"><span class="lore-ic">'+icon('scroll')+'</span><h3>Co se stalo předtím</h3></div><ul class="timeline">'+
+        TL.map(function(tl){return '<li><span class="tage">'+esc(tl[0])+'</span><span class="tt">'+esc(tl[1])+'</span> — '+esc(tl[2])+'</li>';}).join('')+'</ul></div>';
+    }
+    h+='</div>';
+    $('#world').innerHTML=h;
+  }
+
+  // ===== render: Vztahy =====
+  function relNode(id, role){
+    var isObj=id==='skrin';
+    var ch=CHARMAP[id];
+    var unlocked = isObj || state.mode==='rodic' || (ch && ch.gi<=reachedGi());
+    var raceCls = isObj?'r-clovek':(ch?'r-'+ch.race:'');
+    if(!unlocked) return '<div class="node locked"><div class="medallion">'+icon('lock')+'</div><small>?</small></div>';
+    var nm = isObj ? 'Skříň' : (SHORT[id]||ch.name);
+    var im = isObj?null:imgPortrait(id,nm);
+    var inner = im||icon(isObj?'zamek':ch.ic);
+    return '<div class="node '+raceCls+'"><div class="medallion'+(im?' pm':'')+'">'+inner+'</div><small>'+esc(nm)+(role?'<br>'+esc(role):'')+'</small></div>';
+  }
+  function relArrow(label){
+    return '<div class="arrow"><svg viewBox="0 0 28 12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h23M19 2l5 4-5 4"/></svg><em>'+esc(label)+'</em></div>';
+  }
+  function renderRelations(){
+    $('#relHint').textContent = state.mode==='deti' ? 'Jak spolu postavy souvisejí. Co jste ještě nečetli, zůstává zahalené.' : 'Jak spolu postavy souvisejí (v režimu Rodiče vidíš vše).';
+    var h='';
+    h+='<div class="rel-block"><h3>Cesta skříní</h3><p class="rsub">Jak se Lucie dostala z domu profesora do zasněžené Narnie.</p><div class="chain">'+
+      relNode('lucie')+relArrow('prošla skříní')+relNode('skrin')+relArrow('do lesa k')+relNode('tumnus')+'</div></div>';
+    h+='<div class="rel-block"><h3>Čarodějnice a její družina</h3><p class="rsub">Kdo slouží Bílé čarodějnici a plní její rozkazy.</p><div class="chain">'+
+      relNode('jadis')+relArrow('velí')+relNode('maugrim')+relArrow('a také')+relNode('trpaslik')+'</div></div>';
+    h+='<div class="rel-block"><h3>Edmundova cesta</h3><p class="rsub">Jak se Edmund dostal od zrady až k odpuštění.</p><div class="chain">'+
+      relNode('edmund')+relArrow('svedla ho')+relNode('jadis')+relArrow('zachránil ho')+relNode('aslan')+'</div></div>';
+    var spojenci=['petr','zuzana','edmund','lucie','aslan','tumnus','pbobr','pbobrova','oreius'];
+    h+='<div class="rel-block"><h3>Aslanovi spojenci</h3><p class="rsub">Děti a věrní Narnijci, kteří stojí na straně dobra.</p><div class="nine">'+
+      spojenci.map(function(id){return relNode(id, CHARMAP[id].rlab);}).join('')+'</div><p class="ninecap">4 sourozenci · 1 lev · 1 faun · 2 bobři · 1 kentaur</p></div>';
+    $('#relations').innerHTML=h;
+  }
+
+  function rerender(){ updateProgress(); renderAudio(); renderChapters(); renderChars(); renderRelations(); renderWorld(); }
+
+  // ===== toggles =====
+  $('#modeswitch').addEventListener('click',function(e){var b=e.target.closest('button'); if(!b)return;
+    state.mode=b.getAttribute('data-mode'); save(); syncMode(); rerender();});
+
+  function effectiveTheme(){ return state.theme || (window.matchMedia && matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light'); }
+  function applyTheme(){
+    var root=document.documentElement;
+    if(state.theme) root.setAttribute('data-theme',state.theme); else root.removeAttribute('data-theme');
+    var btn=$('#themeToggle'); if(!btn) return;
+    var eff=effectiveTheme();
+    btn.innerHTML=icon(eff==='dark'?'sun':'moon');
+    var lab = eff==='dark' ? 'Přepnout na světlý motiv' : 'Přepnout na tmavý motiv';
+    btn.setAttribute('aria-label', lab); btn.title = lab;
+  }
+  $('#themeToggle').addEventListener('click',function(){ state.theme=effectiveTheme()==='dark'?'light':'dark'; save(); applyTheme(); });
+
+  function syncMode(){
+    Array.prototype.forEach.call($('#modeswitch').children,function(b){b.classList.toggle('on',b.getAttribute('data-mode')===state.mode);});
+  }
+  function goToTab(v){
+    var b=$('#tabs button[data-view="'+v+'"]'); if(!b) return;
+    Array.prototype.forEach.call($('#tabs').children,function(x){x.classList.toggle('on',x===b); x.setAttribute('aria-selected', x===b?'true':'false');});
+    ['audio','kapitoly','postavy','svet'].forEach(function(id){$('#view-'+id).classList.toggle('on',id===v);});
+  }
+  $('#tabs').addEventListener('click',function(e){var b=e.target.closest('button'); if(!b)return;
+    goToTab(b.getAttribute('data-view'));
+  });
+  $('#subseg').addEventListener('click',function(e){var b=e.target.closest('button'); if(!b)return;
+    var s=b.getAttribute('data-sub');
+    Array.prototype.forEach.call($('#subseg').children,function(x){x.classList.toggle('on',x===b);});
+    $('#sub-galerie').hidden=(s!=='galerie'); $('#sub-vztahy').hidden=(s!=='vztahy');
+  });
+
+  // ===== init =====
+  function init(){
+    syncMode(); applyTheme(); rerender();
+  }
+  init();
+
+})();
+</script>
+  <a href="https://vitekmaca.github.io/rozcestnik/" style="position:fixed;bottom:12px;right:12px;z-index:9999;background:rgba(20,20,20,.75);color:#fff;font:500 13px/1 system-ui,-apple-system,sans-serif;padding:8px 12px;border-radius:20px;text-decoration:none;backdrop-filter:blur(4px);box-shadow:0 2px 8px rgba(0,0,0,.25)">🧭 rozcestník</a>
+</body>
+</html>
